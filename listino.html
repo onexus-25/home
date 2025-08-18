@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Licenze software e progetti digitali di Davide Spatola">
+  <meta name="author" content="Davide Spatola">
+  
+  <title>Progetti Software | Davide Spatola</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  
+  <!-- AOS Animation Library -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-color: #2563eb;
+      --primary-dark: #1d4ed8;
+      --secondary-color: #64748b;
+      --accent-color: #06b6d4;
+      --success-color: #10b981;
+      --warning-color: #f59e0b;
+      --text-dark: #1e293b;
+      --text-light: #64748b;
+      --background-light: #f8fafc;
+      --white: #ffffff;
+      --border-light: #e2e8f0;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-accent: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      color: var(--text-dark);
+      overflow-x: hidden;
+      background: var(--background-light);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--background-light);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary-color);
+      border-radius: 3px;
+    }
+
+    /* Navigation */
+    .navbar {
+      background: var(--white);
+      border-bottom: 1px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
+      padding: 1rem 0;
+    }
+
+    .navbar-brand {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color) !important;
+      text-decoration: none;
+    }
+
+    .nav-link {
+      color: var(--text-dark) !important;
+      font-weight: 500;
+      margin: 0 0.5rem;
+      padding: 0.5rem 1rem !important;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--primary-color) !important;
+      background: rgba(37, 99, 235, 0.1);
+    }
+
+    /* Header Section */
+    .pricing-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 100px 0 60px;
+      color: white;
+      text-align: center;
+      position: relative;
+    }
+
+    .pricing-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="grad" cx="50%" cy="50%" r="50%"><stop offset="0%" style="stop-color:rgba(255,255,255,0.1);stop-opacity:1" /><stop offset="100%" style="stop-color:rgba(255,255,255,0);stop-opacity:0" /></radialGradient></defs><circle cx="200" cy="200" r="100" fill="url(%23grad)"/><circle cx="700" cy="300" r="150" fill="url(%23grad)"/><circle cx="400" cy="700" r="120" fill="url(%23grad)"/></svg>') no-repeat center center;
+      background-size: cover;
+      opacity: 0.3;
+    }
+
+    .pricing-header-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .pricing-header h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .pricing-header p {
+      font-size: 1.25rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Section Styles */
+    .section {
+      padding: 80px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-title h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 1rem;
+    }
+
+    .section-title p {
+      font-size: 1.125rem;
+      color: var(--text-light);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Pricing Cards */
+    .pricing-card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border-light);
+      transition: all 0.4s ease;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pricing-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-12px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .pricing-card.popular {
+      border: 2px solid var(--primary-color);
+      transform: scale(1.05);
+      position: relative;
+    }
+
+    .pricing-card.popular::before {
+      height: 6px;
+    }
+
+    .pricing-card.popular:hover {
+      transform: scale(1.05) translateY(-12px);
+    }
+
+    .popular-badge {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+      color: var(--white);
+      padding: 8px 24px;
+      border-radius: 25px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      box-shadow: var(--shadow-md);
+    }
+
+    .card-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .pricing-icon {
+      width: 90px;
+      height: 90px;
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    .pricing-icon i {
+      font-size: 2.5rem;
+      color: var(--white);
+    }
+
+    .card-header h4 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 0.75rem;
+    }
+
+    .pricing-description {
+      color: var(--text-light);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .pricing-price {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      padding: 2rem;
+      border-radius: 16px;
+      background: var(--background-light);
+      border: 2px solid var(--border-light);
+    }
+
+    .currency {
+      font-size: 1.5rem;
+      color: var(--text-light);
+      vertical-align: top;
+      margin-right: 4px;
+    }
+
+    .amount {
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: var(--primary-color);
+      margin: 0;
+    }
+
+    .period {
+      font-size: 1.125rem;
+      color: var(--text-light);
+      margin-left: 4px;
+    }
+
+    .custom-price {
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+      color: var(--white);
+      border: none;
+    }
+
+    .custom-pricing {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .custom-label {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .custom-detail {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .pricing-features {
+      flex-grow: 1;
+      margin-bottom: 2.5rem;
+    }
+
+    .pricing-features ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .pricing-features li {
+      padding: 1rem 0;
+      color: var(--text-light);
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 1rem;
+    }
+
+    .pricing-features li:last-child {
+      border-bottom: none;
+    }
+
+    .pricing-features li i {
+      color: var(--success-color);
+      margin-right: 1rem;
+      font-size: 1rem;
+      width: 20px;
+      text-align: center;
+    }
+
+    .btn-pricing {
+      display: block;
+      width: 100%;
+      background: var(--primary-color);
+      color: var(--white);
+      border: none;
+      padding: 16px 32px;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      text-align: center;
+      transition: all 0.3s ease;
+      font-size: 1.125rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-pricing:hover {
+      background: var(--primary-dark);
+      color: var(--white);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .pricing-card.custom .btn-pricing {
+      background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+    }
+
+    .pricing-card.custom .btn-pricing:hover {
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    }
+
+    /* FAQ Section */
+    .faq-section {
+      background: var(--white);
+    }
+
+    .accordion-item {
+      border: 1px solid var(--border-light);
+      margin-bottom: 1rem;
+      border-radius: 12px !important;
+      overflow: hidden;
+    }
+
+    .accordion-button {
+      background: var(--background-light);
+      color: var(--text-dark);
+      font-weight: 600;
+      border: none;
+      padding: 1.5rem;
+    }
+
+    .accordion-button:not(.collapsed) {
+      background: var(--primary-color);
+      color: var(--white);
+      box-shadow: none;
+    }
+
+    .accordion-body {
+      padding: 1.5rem;
+      color: var(--text-light);
+    }
+
+    /* CTA Section */
+    .cta-section {
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+      color: white;
+      text-align: center;
+      padding: 80px 0;
+    }
+
+    .btn-cta {
+      background: var(--white);
+      color: var(--primary-color);
+      border: none;
+      padding: 16px 40px;
+      border-radius: 50px;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+      font-size: 1.125rem;
+      margin: 0 1rem;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn-cta:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.2);
+      color: var(--primary-color);
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--text-dark);
+      color: var(--white);
+      padding: 3rem 0 2rem;
+    }
+
+    .footer h5 {
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .footer a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer a:hover {
+      color: var(--white);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 2rem;
+      margin-top: 2rem;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 45px;
+      height: 45px;
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.7);
+      border-radius: 50%;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+      background: var(--primary-color);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .pricing-header h1 {
+        font-size: 2.5rem;
+      }
+      
+      .section-title h2 {
+        font-size: 2rem;
+      }
+      
+      .pricing-card {
+        margin-bottom: 2rem;
+      }
+
+      .pricing-card.popular {
+        transform: none;
+      }
+
+      .pricing-card.popular:hover {
+        transform: translateY(-8px);
+      }
+
+      .btn-cta {
+        margin: 0.5rem;
+        display: block;
+        width: calc(100% - 1rem);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <i class="fas fa-code me-2"></i>Davide Spatola
+      </a>
+      
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#prezzi">Licenze Software</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#faq">FAQ</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contatti">Contatti</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header Section -->
+  <section class="pricing-header">
+    <div class="container">
+      <div class="pricing-header-content" data-aos="fade-up">
+        <h1>Licenze <span style="color: #f093fb;">Software</span></h1>
+        <p>Acquista una licenza per i miei progetti software. Soluzioni create con passione per diverse esigenze professionali.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section id="prezzi" class="section">
+    <div class="container">
+      <div class="section-title" data-aos="fade-up">
+        <h2>Opere dell'Ingegno <span style="color: var(--primary-color);">Disponibili</span></h2>
+        <p>Ogni licenza è perpetua e include 12 mesi di aggiornamenti. Il software è self-hosted, sei tu ad avere il pieno controllo.</p>
+      </div>
+      
+      <div class="row g-4">
+        <!-- Gestionale Palestra -->
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="pricing-card ">
+            <div class="card-header">
+              <div class="pricing-icon">
+                <i class="fas fa-dumbbell"></i>
+              </div>
+              <h4>Software Gestionale Palestra</h4>
+              <p class="pricing-description">Script PHP/MySQL per gestire iscrizioni, abbonamenti e accessi della tua palestra.</p>
+            </div>
+            <div class="pricing-price">
+              <span class="currency">€</span>
+              <span class="amount">249</span>
+              <span class="period">/una tantum</span>
+            </div>
+            <div class="pricing-features">
+              <ul>
+                <li><i class="fas fa-check-circle"></i> Gestione iscritti illimitata</li>
+                <li><i class="fas fa-check-circle"></i> Controllo accessi con QR code</li>
+                <li><i class="fas fa-check-circle"></i> Gestione abbonamenti</li>
+                <li><i class="fas fa-check-circle"></i> Dashboard analytics</li>
+                <li><i class="fas fa-check-circle"></i> Codice sorgente completo</li>
+                <li><i class="fas fa-check-circle"></i> 12 mesi di aggiornamenti inclusi</li>
+                <li><i class="fas fa-check-circle"></i> Documentazione completa</li>
+                <li><i class="fas fa-check-circle"></i> Supporto via email per bug</li>
+              </ul>
+            </div>
+            <div class="pricing-footer">
+              <a href="mailto:info@onexus.it?subject=Acquisto Licenza Gestionale Palestra" class="btn-pricing">Acquista Licenza</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Template Sito Web -->
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="pricing-card popular">
+            <div class="popular-badge">⭐ Più Richiesto</div>
+            <div class="card-header">
+              <div class="pricing-icon">
+                <i class="fas fa-globe"></i>
+              </div>
+              <h4>Template Sito Web Vetrina</h4>
+              <p class="pricing-description">Template HTML/CSS/JS responsive e moderno, ottimizzato SEO, facile da personalizzare.</p>
+            </div>
+            <div class="pricing-price">
+              <span class="currency">€</span>
+              <span class="amount">369</span>
+              <span class="period">/una tantum</span>
+            </div>
+            <div class="pricing-features">
+              <ul>
+                <li><i class="fas fa-check-circle"></i> Design 100% personalizzabile</li>
+                <li><i class="fas fa-check-circle"></i> Completamente responsive</li>
+                <li><i class="fas fa-check-circle"></i> Ottimizzazione SEO di base</li>
+                <li><i class="fas fa-check-circle"></i> Compatibile con tutti gli hosting</li>
+                <li><i class="fas fa-check-circle"></i> Analytics integrabile</li>
+                <li><i class="fas fa-check-circle"></i> Modulo di contatto funzionante</li>
+                <li><i class="fas fa-check-circle"></i> 12 mesi di aggiornamenti inclusi</li>
+                <li><i class="fas fa-check-circle"></i> Documentazione dettagliata</li>
+              </ul>
+            </div>
+            <div class="pricing-footer">
+              <a href="mailto:info@onexus.it?subject=Acquisto Licenza Template Sito Web" class="btn-pricing">Acquista Licenza</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gestionale Parrucchieri -->
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+          <div class="pricing-card">
+            <div class="card-header">
+              <div class="pricing-icon">
+                <i class="fas fa-cut"></i>
+              </div>
+              <h4>Software Gestionale Salone</h4>
+              <p class="pricing-description">Script per la gestione di prenotazioni online e clienti per saloni di bellezza.</p>
+            </div>
+            <div class="pricing-price">
+              <span class="currency">€</span>
+              <span class="amount">249</span>
+              <span class="period">/una tantum</span>
+            </div>
+            <div class="pricing-features">
+              <ul>
+                <li><i class="fas fa-check-circle"></i> Prenotazioni online 24/7</li>
+                <li><i class="fas fa-check-circle"></i> Calendario appuntamenti</li>
+                <li><i class="fas fa-check-circle"></i> Schede clienti dettagliate</li>
+                <li><i class="fas fa-check-circle"></i> Reminder appuntamenti via email</li>
+                <li><i class="fas fa-check-circle"></i> Gestione listino prezzi</li>
+                <li><i class="fas fa-check-circle"></i> Report fatturato</li>
+                <li><i class="fas fa-check-circle"></i> Widget per sito esistente</li>
+                <li><i class="fas fa-check-circle"></i> 12 mesi di aggiornamenti inclusi</li>
+              </ul>
+            </div>
+            <div class="pricing-footer">
+              <a href="mailto:info@onexus.it?subject=Acquisto Licenza Gestionale Salone" class="btn-pricing">Acquista Licenza</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="section faq-section">
+    <div class="container">
+      <div class="section-title" data-aos="fade-up">
+        <h2>Domande <span style="color: var(--primary-color);">Frequenti</span></h2>
+        <p>Risposte alle domande più comuni sull'acquisto e l'utilizzo delle licenze software.</p>
+      </div>
+      
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="accordion" id="faqAccordion" data-aos="fade-up" data-aos-delay="100">
+            
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                  Come funziona l'acquisto della licenza?
+                </button>
+              </h2>
+              <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  L'acquisto è un pagamento una tantum che ti dà diritto a una licenza perpetua per utilizzare il software su un dominio. Riceverai il pacchetto completo con il codice sorgente e la documentazione. Il software va installato sul tuo hosting (self-hosted).
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                  Che tipo di supporto è incluso?
+                </button>
+              </h2>
+              <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  La licenza include il supporto via email per la risoluzione di eventuali bug presenti nel software originale e per assistenza durante la prima installazione. Non include personalizzazioni, sviluppo di nuove funzionalità su richiesta o formazione.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                  Cosa significa "12 mesi di aggiornamenti inclusi"?
+                </button>
+              </h2>
+              <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Per i 12 mesi successivi all'acquisto, riceverai gratuitamente tutti gli aggiornamenti rilasciati per il software, che possono includere nuove funzionalità, miglioramenti di sicurezza e correzioni di bug. Dopo i 12 mesi, potrai continuare a usare la tua versione del software per sempre.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                  Posso modificare il codice sorgente?
+                </button>
+              </h2>
+              <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Sì, la licenza ti permette di accedere e modificare il codice sorgente per adattarlo alle tue esigenze. Tuttavia, le modifiche apportate da te non sono coperte dal supporto.
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="row justify-content-center text-center">
+        <div class="col-lg-8" data-aos="fade-up">
+          <h2 class="mb-4" style="font-size: 2.5rem; font-weight: 700;">Hai trovato il software che fa per te?</h2>
+          <p class="mb-4" style="font-size: 1.25rem; opacity: 0.9;">Contattami per finalizzare l'acquisto della licenza o per qualsiasi domanda sui miei progetti.</p>
+          <div class="d-flex flex-wrap justify-content-center">
+            <a href="mailto:info@onexus.it?subject=Richiesta Informazioni Licenze Software" class="btn-cta">
+              <i class="fas fa-envelope me-2"></i>Richiedi Informazioni
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contatti" class="section" style="background: var(--background-light);">
+    <div class="container">
+      <div class="section-title" data-aos="fade-up">
+        <h2>Contatta<span style="color: var(--primary-color);">mi</span></h2>
+        <p>Sono a disposizione per rispondere a domande tecniche sui software e sulle modalità di acquisto.</p>
+      </div>
+      
+      <div class="row g-4 justify-content-center">
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="pricing-card text-center" style="padding: 2rem;">
+            <div class="pricing-icon" style="width: 70px; height: 70px; margin-bottom: 1rem;">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <h5 style="color: var(--text-dark); margin-bottom: 1rem;">Email</h5>
+            <p><a href="mailto:info@onexus.it" style="color: var(--primary-color); font-weight: 600;">info@onexus.it</a></p>
+            <p style="color: var(--text-light); font-size: 0.9rem;">Risposta entro 24 ore</p>
+          </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="pricing-card text-center" style="padding: 2rem;">
+            <div class="pricing-icon" style="width: 70px; height: 70px; margin-bottom: 1rem;">
+              <i class="fab fa-linkedin"></i>
+            </div>
+            <h5 style="color: var(--text-dark); margin-bottom: 1rem;">Profilo Professionale</h5>
+            <p><a href="https://www.linkedin.com/in/davide-spatola-169524204" target="_blank" style="color: var(--primary-color); font-weight: 600;">LinkedIn</a></p>
+            <p style="color: var(--text-light); font-size: 0.9rem;">La mia formazione e carriera</p>
+          </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+          <div class="pricing-card text-center" style="padding: 2rem;">
+            <div class="pricing-icon" style="width: 70px; height: 70px; margin-bottom: 1rem;">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h5 style="color: var(--text-dark); margin-bottom: 1rem;">Formazione</h5>
+            <p><a href="https://www.disit.uniupo.it/it" target="_blank" style="color: var(--primary-color); font-weight: 600;">Università Piemonte Orientale</a></p>
+            <p style="color: var(--text-light); font-size: 0.9rem;">Laurea in Informatica</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <h5><i class="fas fa-code me-2"></i>Davide Spatola</h5>
+          <p>Sviluppatore software con la passione per la creazione di soluzioni digitali utili e performanti, realizzate nel tempo libero.</p>
+          <div class="social-links">
+            <a href="https://www.linkedin.com/in/davide-spatola-169524204" title="LinkedIn" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.instagram.com/rigel.ware" title="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        
+        <div class="col-lg-2">
+          <h5>Progetti</h5>
+          <ul class="list-unstyled">
+            <li><a href="#prezzi">Gestionale Palestra</a></li>
+            <li><a href="#prezzi">Template Sito Web</a></li>
+            <li><a href="#prezzi">Gestionale Salone</a></li>
+          </ul>
+        </div>
+        
+        <div class="col-lg-3">
+          <h5>Informazioni</h5>
+          <ul class="list-unstyled">
+            <li><a href="#faq">Domande Frequenti</a></li>
+            <li><a href="mailto:info@onexus.it">Richiedi Info Licenza</a></li>
+          </ul>
+        </div>
+        
+        <div class="col-lg-3">
+          <h5>Contatti</h5>
+          <ul class="list-unstyled">
+            <li><i class="fas fa-envelope me-2"></i> <a href="mailto:info@onexus.it">info@onexus.it</a></li>
+            <li><i class="fas fa-graduation-cap me-2"></i> <a href="https://www.disit.uniupo.it/it" target="_blank">UPO - Informatica</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2024 Davide Spatola. Tutti i diritti riservati. | Sviluppato con ❤️ in Italia</p>
+        <p style="font-size: 0.875rem; margin-top: 0.5rem;">I compensi derivanti dalla cessione del diritto d'autore su queste opere dell'ingegno sono gestiti in conformità con la normativa vigente.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  
+  <script>
+    // Initialize AOS
+    AOS.init({
+      duration: 800,
+      easing: 'ease-out-cubic',
+      once: true,
+      offset: 100
+    });
+  </script>
+
+</body>
+</html>
