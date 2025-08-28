@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - Davide Spatola</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- Stile ispirato a Designers Italia --- */
+        :root {
+            --primary-color: #0066cc;
+            --dark-color: #333333;
+            --light-gray-color: #f4f4f4;
+            --border-color: #e0e0e0;
+            --text-color: #5c6f82;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Titillium Web', sans-serif;
+            background-color: var(--light-gray-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        .container {
+            display: flex;
+            max-width: 900px;
+            margin: 40px auto;
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- Colonna Sinistra (Sidebar) --- */
+        .sidebar {
+            width: 35%;
+            padding: 30px;
+            background-color: #f9f9f9;
+            border-right: 1px solid var(--border-color);
+        }
+        
+        .sidebar h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 5px;
+        }
+        
+        .contact-info ul {
+            list-style: none;
+        }
+
+        .contact-info li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .contact-info li svg {
+            width: 18px;
+            height: 18px;
+            margin-right: 10px;
+            fill: var(--primary-color);
+        }
+
+        .contact-info a {
+            text-decoration: none;
+            color: var(--dark-color);
+            transition: color 0.3s;
+        }
+
+        .contact-info a:hover {
+            color: var(--primary-color);
+        }
+
+        .skills-list, .languages-list {
+            list-style: none;
+        }
+
+        .skills-list li, .languages-list li {
+            margin-bottom: 10px;
+        }
+        
+        .qr-code {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .qr-code img {
+            width: 120px;
+            height: 120px;
+        }
+        
+        .qr-code p {
+            font-size: 0.8em;
+            color: var(--text-color);
+            margin-top: 5px;
+        }
+
+        /* --- Colonna Destra (Contenuto Principale) --- */
+        .main-content {
+            width: 65%;
+            padding: 40px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 5px;
+        }
+        
+        .header h3 {
+            font-size: 1.3em;
+            font-weight: 400;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+        }
+
+        .main-content h2 {
+            color: var(--primary-color);
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .section p {
+             color: var(--text-color);
+        }
+        
+        .job, .project, .education-item {
+            margin-bottom: 25px;
+        }
+        
+        .job-title, .project-title, .degree {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .company, .education-institution {
+            font-weight: 400;
+            color: var(--primary-color);
+        }
+        
+        .date {
+            font-size: 0.9em;
+            color: var(--text-color);
+            font-style: italic;
+        }
+        
+        .job-description, .project-description {
+            margin-top: 10px;
+            list-style-position: outside;
+            padding-left: 20px;
+        }
+        
+        .job-description li, .project-description li {
+            margin-bottom: 8px;
+            color: var(--text-color);
+        }
+        
+        .tech-tags {
+            margin-top: 10px;
+        }
+
+        .tag {
+            display: inline-block;
+            background-color: var(--light-gray-color);
+            color: var(--text-color);
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        
+        /* --- Stile per la stampa e schermi piccoli --- */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                margin: 0;
+            }
+            .sidebar, .main-content {
+                width: 100%;
+                border-right: none;
+            }
+            
+            /* --- MODIFICA PER IL RIORDINO SU MOBILE --- */
+            .main-content {
+                order: 1; /* Il contenuto principale viene mostrato per primo */
+            }
+            .sidebar {
+                order: 2; /* La sidebar (con contatti) viene mostrata per seconda */
+            }
+            /* --- FINE MODIFICA --- */
+        }
+        
+        @media print {
+            body {
+                background-color: #fff;
+            }
+            .container {
+                box-shadow: none;
+                margin: 0;
+            }
+            .sidebar {
+                background-color: #fff;
+            }
+            a {
+                text-decoration: none;
+                color: var(--dark-color);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <aside class="sidebar">
+            <section class="contact-info">
+                <h2>Contatti</h2>
+                <ul>
+                    <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.02.74-.25 1.02l-2.2 2.2z"/></svg>
+                        <a href="tel:+393388195900">+39 3388195900</a>
+                    </li>
+                    <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                        <a href="mailto:davide.spatola000@gmail.com">davide.spatola000@gmail.com</a>
+                    </li>
+                    <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                        <a href="mailto:davide.spatola0@pec.it">davide.spatola0@pec.it</a>
+                    </li>
+                    <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-7 2h-2v2H8v2h2v2h2v-2h2v-2h-2V5M7 15h2v2H7v-2m4 0h2v2h-2v-2m4 0h2v2h-2v-2z"/></svg>
+                        <a href="https://www.linkedin.com/in/davide-spatola-169524204/" target="_blank">Linkedin</a>
+                    </li>
+                    <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.6-4-1.6-.5-1.4-1.3-1.8-1.3-1.8-1-1 .1-1 .1-1 1.1.1 1.7 1.1 1.7 1.1.9 1.6 2.5 1.2 3.1.9.1-.7.4-1.2.7-1.4-2.4-.3-5-1.2-5-5.3 0-1.2.4-2.2 1.1-2.9-.1-.3-.5-1.4.1-2.9 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.5.2 2.6.1 2.9.7.7 1.1 1.7 1.1 2.9 0 4.1-2.6 5-5.1 5.3.4.3.8.9.8 1.8v2.6c0 .4.2.7.8.6A12 12 0 0 0 12 .3z"/></svg>
+                        <a href="https://onexus.it/listino.html" target="_blank">Sito Web - Progetti</a>
+                    </li>
+                </ul>
+            </section>
+            
+            <section class="skills">
+                <h2>Competenze</h2>
+                <ul class="skills-list">
+                    <li><strong>Linguaggi:</strong> C, Python, JavaScript, Java, SQL, Kotlin, Swift</li>
+                    <li><strong>Frontend:</strong> React,HTML5, CSS3</li>
+                    <li><strong>Backend:</strong> Node.js</li>
+                    <li><strong>Database:</strong> PostgreSQL, MongoDB, MariaDB, Firebase, SQLite, NoSQL, Datawarehouse  </li>
+                    <li><strong>DevOps:</strong> Docker, Git </li>
+                    <li><strong>Metodologie:</strong> Visual Paradigm, Agile, Scrum</li>
+                </ul>
+            </section>
+            
+            <section class="languages">
+                <h2>Lingue</h2>
+                <ul class="languages-list">
+                    <li><strong>Italiano:</strong> Madrelingua</li>
+                    <li><strong>Inglese:</strong> Livello: B2 </li>
+                </ul>
+            </section>
+            
+            <div class="qr-code">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://20033417.github.io/presentazione/service.html" alt="QR Code per il mio sito web">
+                <p>Scansionami per visitare i progetti
+                                        <a href="https://onexus.it/listino.html" target="_blank">o clicca qui</a>
+                </p>
+
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <h1>Davide Spatola</h1>
+                <h3>Responsabile Dei Sistemi Informativi | Sviluppatore</h3>
+            </header>
+
+            <section class="section profile">
+                <h2>Profilo Professionale</h2>
+                <p>Gestione dei bandi e dei progetti PNRR. Sviluppatore software con esperienza nella progettazione e implementazione di applicazioni web. Specializzato in applicazioni mobili, con competenze in C e Java. Supporter di software opensource e di metodologie agili.</p>
+            </section>
+
+            <section class="section experience">
+                <h2>Esperienza Lavorativa</h2>
+
+                <div class="job">
+                    <p><span class="job-title">Responsabile dei Sistemi Informativi</span> | <span class="company">Città Metropolitana di Milano, Bollate.</span></p>
+                    <p class="date">Dicembre 2024 - In Corso | Presenza |Milano, Italia</p>
+                    <ul class="job-description">
+                        <li>Attuazione e completamento dei bandi PNRR</li>
+                        <li>Gestione del team dei Sistemi Informativi</li>
+                        <li>Monitoraggio e aggiornamento dell'infrastruttura presente (Gestione delle utenze, VPN, Rete, Autenticazione, Permessi, Backup, System recovery, Conservazione digitale, Cloud)</li>
+                        <li>Contributo alle riunioni tra i vari uffici dell'ente</li>
+                        <li>Riunioni con esponenti di PADigitale per la gestione ed il report delle criticità riscontrate negli ultimi anni in temi di cybersecurity e tecniche lock-in less</li>
+                        <li>Confronto e contatto con responsabili e dirigenti degli enti presenti nella rete di Città Metropolitana di Milano</li>
+                        <li>Sviluppo di competenze di problem solving on the job dei guasti pervenuti all'infrastruttura</li>
+                        <li>Capacità decisionale nei momenti di emergenza</li>
+                        <li>Valutazione delle proposte di offerta da parte delle aziende private nei bandi di gara pubblicati in amministrazione trasparente </li>
+                        <li>Principali competenze sviluppate: Tecnico-amministrativa</li>
+
+                    </ul>
+                </div>
+                
+                <div class="job">
+                    <p><span class="job-title">Junior Consultant</span> | <span class="company">Università del Piemonte Orientale</span></p>
+                    <p class="date">Gennaio 2024 - Maggio 2024 - Ibrido | Alessandria, Italia</p>
+                    <ul class="job-description">
+                        <li>Progettazione e sviluppo del backend e del frontend per un applicazione medica.</li>
+                        <li>Ottimizzazione e refactoring del codice iniziale di base.</li>
+                        <li>Implementazione di nuovi moduli e funzionalità nella nativa applicazione.</li>
+                        <li>Collaborazione con il team di medici.</li>
+                        <li>Breve descrizione: L'applicazione monitora le operazioni effettuate dai medici durante le fasi di rianimazione neonatale. L'applicazione permette di valutare i medici al termine delle simulazioni facendo riferimento ad una "Traccia Gold" come sistema knowledge base fornita dal personale medico. La distanza è calcolata utilizzando delle librerie presenti presso il dipartimento di innovazione tecnologica ed attraverso l'ausilio di metodologie di intelligenza artificiale permette di mostrare attraverso una dashboard i risultati di ogni singola traccia e la loro comparazione. Il progetto è stato supportato dal Tomcat Server e pubblicato sul playstore. Utilizzo di vari linguaggi di programmazione: Java, Kotlin, SQL.  </li>
+                        
+                    </ul>
+                </div>
+                
+            </section>
+
+            <section class="section education">
+                <h2>Istruzione</h2>
+                <div class="education-item">
+                    <p><span class="degree">LM18 - Laurea Magistrale in Intelligenza Artificiale </span></p>
+                    <p class="education-institution">Università del Piemonte Orientale</p>
+                    <p class="date">2024 - In corso</p>
+                </div>
+                 <div class="education-item">
+                    <p><span class="degree"> L31 - Lauree in Scienze e Tecnologie Informatiche</span></p>
+                    <p class="education-institution">Università del Piemonte Orientale</p>
+                    <p class="date">2019 - 2024</p>
+                </div>
+                <div class="education-item">
+                    <p><span class="degree"> Liceo Scientifico tecnologico Scienze Applicate</span></p>
+                    <p class="education-institution">G.Curcio</p>
+                    <p class="date">2014 - 2019</p>
+                </div>
+            </section>
+            
+            <section class="section projects">
+                <h2>Progetti Personali</h2>
+                <div class="project">
+                    <p><span class="project-title">Web App - App e-commerce</span> | </p>
+                    
+                    <ul class="tech-tags">
+                        <li>Principali Progetti al link del sito web nella sezione servizi.</li>    
+                        <a href="https://onexus.it/listino.html" target="_blank">Sito Web - Progetti</a>
+                    </ul>
+                    <div class="tech-tags">
+                        <span class="tag">Firebase</span>
+                        <span class="tag">Java</span>
+                    </div>
+                </div>
+            </section>
+            
+             <section class="section certifications">
+                <h2>Pubblicazioni Scientifiche</h2>
+                <div class="education-item">
+                     <p><span class="degree">Comprehensive Neonatal Resuscitation Course: Integrating High-Fidelity Simulation and Novapp for Enhanced Performance Evaluation</span></p>
+                                            <p>Livello: Internazionale</p>
+
+                     <p class="education-institution">Nome Rivista/Volume:</p>
+                        <p>23rd International Conference of the Italian Association for Artificial Intelligence /3902</p>
+                        <p>N. di pagine: 8</p>
+                        <p>Tipo Autore: Espositore</p>
+                                                <a href="https://www.researchgate.net/publication/388185093_Comprehensive_Neonatal_Resuscitation_Course_Integrating_High-Fidelity_Simulation_and_Novapp_for_Enhanced_Performance_Evaluation" target="_blank">Link Researchgate</a>
+
+                    <p class="date">Data di pubblicazione: January 2025 </p>
+                </div>
+
+                <h2>Corsi di formazione</h2>
+                <div class="education-item">
+                     <p><span class="degree">Amministrazione e struttura degli enti locali ed informatica giuridica</span></p>
+                    <p>Data Inizio : 17/03/2025</p>
+                    <p>Data Fine: In corso</p>
+                    <p>Ente Organizzatore: Omniavis</p>
+                    <p>Indirizzo: Bollate</p>
+                    <p>Tipologia: Corso di formazione obbligatoria</p>
+                    <p>Durata in ore: 40</p>
+                </div>
+            
+                <div class="education-item">
+                     <p><span class="degree"> Smart city: dove innovazione e sostenibilità si incontrano</span></p>
+                    <p>Data Inizio e fine: 07/05/2025</p>
+                    <p>Ente Organizzatore: Politecnico di Milano</p>
+                    <p>Indirizzo: Via Giovanni Durando 10</p>
+                    <p>Tipologia: Congresso/convegno di aggiornamento attinente al profilo</p>
+                    <p>Durata in ore: 3</p>
+                    <p>Competenze maturate/consolidate: Aggiornamento di procedure e validazione dei piani adottati in vista di asseverazione, approfondimento di ai e del gemello digitale</p>
+                </div>
+
+                <div class="education-item">
+                    <p><span class="degree">Corso Anti Corruzione</span></p>
+                    <p>Ente Organizzatore: Comune di Bollate</p>
+
+                    <p><span class="degree">Corso Sulla Privacy</span></p>
+                    <p>Ente Organizzatore: Comune di Bollate</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>
