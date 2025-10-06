@@ -516,6 +516,144 @@
         width: calc(100% - 1rem);
       }
     }
+
+    /* Enhanced Hero Section Styles */
+    .hero-particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 8px 16px;
+      border-radius: 50px;
+      margin-bottom: 1.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .hero-highlight {
+      position: relative;
+      color: #f093fb;
+      background: linear-gradient(135deg, #f093fb, #f5576c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 3s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { filter: hue-rotate(0deg); }
+      50% { filter: hue-rotate(30deg); }
+    }
+
+    .hero-description {
+      font-size: 1.25rem;
+      margin-bottom: 2rem;
+      opacity: 0.95;
+      line-height: 1.6;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 2rem;
+      margin-top: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 1.5rem 2rem;
+      border-radius: 16px;
+      min-width: 120px;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 500;
+    }
+
+    /* Enhanced Pricing Cards */
+    .pricing-card {
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pricing-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .pricing-card:hover::before {
+      left: 100%;
+    }
+
+    .pricing-icon {
+      transition: all 0.3s ease;
+    }
+
+    .pricing-card:hover .pricing-icon {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    /* FAQ Enhancement */
+    .accordion-button {
+      transition: all 0.3s ease;
+    }
+
+    .accordion-button:not(.collapsed) {
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+      color: var(--white);
+    }
+
+    /* Enhanced CTA Section */
+    .cta-section {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="grad" cx="50%" cy="50%" r="50%"><stop offset="0%" style="stop-color:rgba(255,255,255,0.1);stop-opacity:1" /><stop offset="100%" style="stop-color:rgba(255,255,255,0);stop-opacity:0" /></radialGradient></defs><circle cx="200" cy="200" r="100" fill="url(%23grad)"/><circle cx="700" cy="300" r="150" fill="url(%23grad)"/><circle cx="400" cy="700" r="120" fill="url(%23grad)"/></svg>') no-repeat center center;
+      background-size: cover;
+      opacity: 0.3;
+    }
+
+    .cta-section > .container {
+      position: relative;
+      z-index: 2;
+    }
   </style>
 </head>
 
@@ -550,10 +688,28 @@
 
   <!-- Header Section -->
   <section class="pricing-header">
+    <div class="hero-particles" id="particles-pricing"></div>
     <div class="container">
       <div class="pricing-header-content" data-aos="fade-up">
-        <h1>Licenze <span style="color: #f093fb;">Software</span></h1>
-        <p>Acquista una licenza per i miei progetti software. Soluzioni create con passione per diverse esigenze professionali.</p>
+        <div class="hero-badge" data-aos="fade-up" data-aos-delay="100">
+          <span class="badge-text">💎 Licenze Software Premium</span>
+        </div>
+        <h1>Licenze <span class="hero-highlight">Software</span></h1>
+        <p class="hero-description">Acquista una licenza per i nostri progetti software. Soluzioni create con passione per diverse esigenze professionali.</p>
+        <div class="hero-stats" data-aos="fade-up" data-aos-delay="300">
+          <div class="stat-item">
+            <div class="stat-number" data-target="12">0</div>
+            <div class="stat-label">Progetti Disponibili</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-target="50">0</div>
+            <div class="stat-label">Licenze Vendute</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-target="100">0</div>
+            <div class="stat-label">% Soddisfazione</div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -863,6 +1019,149 @@ Configurare le opzioni previste dall'interfaccia di amministrazione.
       once: true,
       offset: 100
     });
+
+    // Animated Counters
+    function animateCounters() {
+      const counters = document.querySelectorAll('.stat-number');
+      const speed = 200;
+      
+      counters.forEach(counter => {
+        const target = +counter.getAttribute('data-target');
+        const increment = target / speed;
+        
+        const updateCount = () => {
+          const count = +counter.innerText;
+          
+          if (count < target) {
+            counter.innerText = Math.ceil(count + increment);
+            setTimeout(updateCount, 10);
+          } else {
+            counter.innerText = target;
+          }
+        };
+        
+        updateCount();
+      });
+    }
+
+    // Intersection Observer for counter animation
+    const counterObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounters();
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    const heroStats = document.querySelector('.hero-stats');
+    if (heroStats) {
+      counterObserver.observe(heroStats);
+    }
+
+    // Particle Effect for pricing page
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles-pricing');
+      if (!particlesContainer) return;
+      
+      const particleCount = 30;
+      const colors = ['rgba(255, 255, 255, 0.1)', 'rgba(240, 147, 251, 0.1)', 'rgba(245, 87, 108, 0.1)'];
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.style.position = 'absolute';
+        particle.style.width = Math.random() * 4 + 1 + 'px';
+        particle.style.height = particle.style.width;
+        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.borderRadius = '50%';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.pointerEvents = 'none';
+        particle.style.animation = `floatParticle ${Math.random() * 10 + 10}s linear infinite`;
+        particle.style.animationDelay = Math.random() * 5 + 's';
+        
+        particlesContainer.appendChild(particle);
+      }
+    }
+
+    // Add particle animation to CSS
+    const particleStyle = document.createElement('style');
+    particleStyle.textContent = `
+      @keyframes floatParticle {
+        0% {
+          transform: translateY(100vh) translateX(0);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        90% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100vh) translateX(100px);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(particleStyle);
+
+    // Initialize particles on load
+    createParticles();
+
+    // Enhanced hover effects for pricing cards
+    document.querySelectorAll('.pricing-card').forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-12px) scale(1.02)';
+      });
+      
+      card.addEventListener('mouseleave', function() {
+        if (this.classList.contains('popular')) {
+          this.style.transform = 'scale(1.05)';
+        } else {
+          this.style.transform = 'translateY(0)';
+        }
+      });
+    });
+
+    // Smooth scroll for FAQ accordion
+    document.querySelectorAll('.accordion-button').forEach(button => {
+      button.addEventListener('click', function() {
+        setTimeout(() => {
+          const accordionItem = this.closest('.accordion-item');
+          if (accordionItem) {
+            accordionItem.scrollIntoView({
+              behavior: 'smooth',
+              block: 'nearest'
+            });
+          }
+        }, 300);
+      });
+    });
+
+    // Enhanced form interaction for newsletter (if added)
+    const newsletterForm = document.querySelector('.newsletter-form');
+    if (newsletterForm) {
+      newsletterForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const emailInput = this.querySelector('input[type="email"]');
+        if (emailInput && emailInput.value) {
+          // Show success message
+          const successMessage = document.createElement('div');
+          successMessage.className = 'alert alert-success mt-3';
+          successMessage.textContent = "Grazie per l'iscrizione! Ti contatteremo presto.";
+          this.parentNode.appendChild(successMessage);
+          
+          // Clear form
+          emailInput.value = '';
+          
+          // Remove message after 3 seconds
+          setTimeout(() => {
+            successMessage.remove();
+          }, 3000);
+        }
+      });
+    }
   </script>
 
 </body>
