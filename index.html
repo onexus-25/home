@@ -132,10 +132,31 @@
       opacity: 0.3;
     }
 
+    .hero-particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
     .hero-content {
       position: relative;
       z-index: 2;
       color: white;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 8px 16px;
+      border-radius: 50px;
+      margin-bottom: 1.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
     }
 
     .hero h1 {
@@ -145,10 +166,205 @@
       line-height: 1.2;
     }
 
-    .hero p {
+    .hero-highlight {
+      position: relative;
+      color: #f093fb;
+      background: linear-gradient(135deg, #f093fb, #f5576c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 3s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { filter: hue-rotate(0deg); }
+      50% { filter: hue-rotate(30deg); }
+    }
+
+    .hero-description {
       font-size: 1.25rem;
       margin-bottom: 2rem;
-      opacity: 0.9;
+      opacity: 0.95;
+      line-height: 1.6;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 500;
+    }
+
+    .hero-visual {
+      position: relative;
+      height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tech-stack {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .tech-item {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      animation: float 4s ease-in-out infinite;
+      animation-delay: var(--delay);
+    }
+
+    .tech-item:nth-child(1) { top: 10%; left: 20%; }
+    .tech-item:nth-child(2) { top: 15%; right: 25%; }
+    .tech-item:nth-child(3) { top: 60%; left: 15%; }
+    .tech-item:nth-child(4) { top: 70%; right: 20%; }
+    .tech-item:nth-child(5) { top: 40%; left: 10%; }
+    .tech-item:nth-child(6) { top: 35%; right: 15%; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .hero-code {
+      position: relative;
+      z-index: 3;
+      animation: fadeInScale 1s ease-out 0.5s both;
+    }
+
+    @keyframes fadeInScale {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .code-window {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .code-header {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .code-dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .dot.red { background: #ff5f56; }
+    .dot.yellow { background: #ffbd2e; }
+    .dot.green { background: #27ca3f; }
+
+    .code-title {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .code-content {
+      padding: 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .code-keyword { color: #ff79c6; }
+    .code-variable { color: #8be9fd; }
+    .code-function { color: #50fa7b; }
+    .code-property { color: #f1fa8c; }
+    .code-string { color: #f1fa8c; }
+
+    .hero-illustration {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+    }
+
+    .floating-card {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 16px;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: white;
+      font-size: 0.875rem;
+      font-weight: 500;
+      animation: floatCard var(--duration) ease-in-out infinite;
+      animation-delay: var(--delay);
+    }
+
+    .floating-card i {
+      font-size: 1.5rem;
+      color: #f093fb;
+    }
+
+    .floating-card:nth-child(1) { top: 20%; right: 10%; }
+    .floating-card:nth-child(2) { bottom: 25%; left: 5%; }
+    .floating-card:nth-child(3) { top: 50%; right: 5%; }
+
+    @keyframes floatCard {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-15px) rotate(2deg); }
     }
 
     .btn-primary-modern {
@@ -464,6 +680,486 @@
       opacity: 1;
       transform: translateY(0);
     }
+
+    /* Portfolio Section Styles */
+    .portfolio-card {
+      background: var(--white);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.4s ease;
+      border: 1px solid var(--border-light);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .portfolio-card:hover {
+      transform: translateY(-12px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .portfolio-image {
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px 16px 0 0;
+    }
+
+    .portfolio-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .portfolio-card:hover .portfolio-overlay {
+      opacity: 1;
+    }
+
+    .btn-view-project {
+      background: var(--primary-color);
+      color: var(--white);
+      padding: 12px 24px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      transform: translateY(20px);
+    }
+
+    .portfolio-card:hover .btn-view-project {
+      transform: translateY(0);
+    }
+
+    .btn-view-project:hover {
+      background: var(--primary-dark);
+      color: var(--white);
+    }
+
+    .portfolio-content {
+      padding: 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .portfolio-content h4 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .project-category {
+      color: var(--primary-color);
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .portfolio-content p {
+      color: var(--text-light);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag {
+      background: var(--background-light);
+      color: var(--text-light);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      border: 1px solid var(--border-light);
+      transition: all 0.2s ease;
+    }
+
+    .tag:hover {
+      background: var(--primary-color);
+      color: var(--white);
+      border-color: var(--primary-color);
+    }
+
+    /* Testimonial Section Styles */
+    .testimonial-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-light);
+      position: relative;
+      height: 100%;
+      transition: all 0.3s ease;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .testimonial-quote {
+      font-size: 1.125rem;
+      font-style: italic;
+      color: var(--text-light);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .testimonial-quote::before {
+      content: '"';
+      position: absolute;
+      left: 0;
+      top: -10px;
+      font-size: 3rem;
+      color: var(--primary-color);
+      opacity: 0.3;
+      font-family: Georgia, serif;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .testimonial-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-weight: 600;
+      font-size: 1.25rem;
+    }
+
+    .testimonial-info h6 {
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 0.25rem;
+    }
+
+    .testimonial-info p {
+      color: var(--text-light);
+      font-size: 0.875rem;
+      margin: 0;
+    }
+
+    .testimonial-rating {
+      color: #ffc107;
+      margin-bottom: 1rem;
+    }
+
+    /* Process Section Styles */
+    .process-card {
+      text-align: center;
+      padding: 2rem;
+      border-radius: 16px;
+      background: var(--white);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-light);
+      position: relative;
+      height: 100%;
+      transition: all 0.3s ease;
+    }
+
+    .process-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .process-number {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .process-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+    }
+
+    .process-icon i {
+      font-size: 2rem;
+      color: var(--white);
+    }
+
+    .process-card h5 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 1rem;
+    }
+
+    .process-card p {
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    /* Newsletter Section Styles */
+    .newsletter-section {
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+      color: var(--white);
+      padding: 80px 0;
+    }
+
+    .newsletter-form {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .newsletter-input-group {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .newsletter-input {
+      flex: 1;
+      padding: 16px 20px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50px;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--white);
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .newsletter-input::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .newsletter-input:focus {
+      outline: none;
+      border-color: var(--white);
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-newsletter {
+      background: var(--white);
+      color: var(--primary-color);
+      border: none;
+      padding: 16px 32px;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-md);
+      white-space: nowrap;
+    }
+
+    .btn-newsletter:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+      color: var(--primary-color);
+    }
+
+    /* Blog Section Styles */
+    .blog-card {
+      background: var(--white);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-light);
+      transition: all 0.3s ease;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .blog-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .blog-image {
+      height: 200px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .blog-image-gradient {
+      height: 100%;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .blog-category {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: var(--primary-color);
+      color: var(--white);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .blog-content {
+      padding: 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .blog-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      font-size: 0.875rem;
+      color: var(--text-light);
+    }
+
+    .blog-meta i {
+      color: var(--primary-color);
+      margin-right: 0.25rem;
+    }
+
+    .blog-content h4 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 1rem;
+      line-height: 1.4;
+    }
+
+    .blog-content p {
+      color: var(--text-light);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+
+    .blog-link {
+      color: var(--primary-color);
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .blog-link:hover {
+      color: var(--primary-dark);
+      gap: 0.75rem;
+    }
+
+    /* Process Timeline Styles */
+    .process-timeline {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-light);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--primary-color);
+    }
+
+    .timeline-content-inner h6 {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 1.5rem;
+    }
+
+    .timeline-phases {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: space-between;
+    }
+
+    .phase {
+      flex: 1;
+      min-width: 150px;
+      text-align: center;
+      background: var(--background-light);
+      padding: 1rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-light);
+      transition: all 0.3s ease;
+    }
+
+    .phase:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--primary-color);
+    }
+
+    .phase-name {
+      display: block;
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .phase-duration {
+      display: block;
+      font-size: 0.875rem;
+      color: var(--text-light);
+    }
+
+    @media (max-width: 768px) {
+      .timeline-phases {
+        flex-direction: column;
+      }
+    }
   </style>
 </head>
 
@@ -487,6 +1183,18 @@
             <a class="nav-link" href="#services">Servizi</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="#portfolio">Progetti</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#testimonials">Testimonianze</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#process">Processo</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#blog">Blog</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="#about">Chi Siamo</a>
           </li>
           <li class="nav-item">
@@ -505,22 +1213,90 @@
 
   <!-- Hero Section -->
   <section id="home" class="hero">
+    <div class="hero-particles" id="particles"></div>
     <div class="container">
       <div class="row align-items-center">
         <div class="col-lg-6" data-aos="fade-up">
           <div class="hero-content">
-            <h1>Soluzioni Digitali <br><span style="color: #f093fb;">Innovative</span></h1>
-            <p>Sviluppiamo software eleganti e funzionali per il tuo business. Trasforma le tue idee in realtà digitali con il nostro team di esperti.</p>
-            <div class="hero-buttons">
-              <a href="#services" class="btn-primary-modern">Scopri i Servizi</a>
-              <a href="#contact" class="btn-outline-modern">Contattaci</a>
+            <div class="hero-badge" data-aos="fade-up" data-aos-delay="100">
+              <span class="badge-text">🚀 Sviluppo Software Avanzato</span>
+            </div>
+            <h1>Soluzioni Digitali <br><span class="hero-highlight">Innovative</span></h1>
+            <p class="hero-description">Sviluppiamo software eleganti e funzionali per il tuo business. Trasforma le tue idee in realtà digitali con il nostro team di esperti.</p>
+            <div class="hero-buttons" data-aos="fade-up" data-aos-delay="300">
+              <a href="#services" class="btn-primary-modern">
+                <i class="fas fa-rocket me-2"></i>Scopri i Servizi
+              </a>
+              <a href="#portfolio" class="btn-outline-modern">
+                <i class="fas fa-briefcase me-2"></i>Vedi Progetti
+              </a>
+            </div>
+            <div class="hero-stats" data-aos="fade-up" data-aos-delay="400">
+              <div class="stat-item">
+                <div class="stat-number" data-target="50">0</div>
+                <div class="stat-label">Progetti Completati</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number" data-target="100">0</div>
+                <div class="stat-label">Clienti Soddisfatti</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number" data-target="5">0</div>
+                <div class="stat-label">Anni di Esperienza</div>
+              </div>
             </div>
           </div>
         </div>
         <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
-          <div class="text-center">
-            <div style="background: rgba(255,255,255,0.1); border-radius: 20px; padding: 2rem; backdrop-filter: blur(10px);">
-              <i class="fas fa-code" style="font-size: 6rem; color: rgba(255,255,255,0.8);"></i>
+          <div class="hero-visual">
+            <div class="tech-stack">
+              <div class="tech-item floating" style="--delay: 0s;">
+                <i class="fab fa-react"></i>
+              </div>
+              <div class="tech-item floating" style="--delay: 1s;">
+                <i class="fab fa-node-js"></i>
+              </div>
+              <div class="tech-item floating" style="--delay: 2s;">
+                <i class="fab fa-python"></i>
+              </div>
+              <div class="tech-item floating" style="--delay: 3s;">
+                <i class="fab fa-docker"></i>
+              </div>
+              <div class="tech-item floating" style="--delay: 4s;">
+                <i class="fab fa-aws"></i>
+              </div>
+              <div class="tech-item floating" style="--delay: 5s;">
+                <i class="fas fa-database"></i>
+              </div>
+            </div>
+            <div class="hero-code">
+              <div class="code-window">
+                <div class="code-header">
+                  <div class="code-dots">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                  </div>
+                  <span class="code-title">onexus-solution.js</span>
+                </div>
+                <div class="code-content">
+                  <pre><code class="language-javascript"><span class="code-keyword">const</span> <span class="code-variable">createInnovation</span> = <span class="code-function">()</span> => {<br>  <span class="code-keyword">return</span> {<br>    <span class="code-property">technology</span>: <span class="code-string">'cutting-edge'</span>,<br>    <span class="code-property">performance</span>: <span class="code-string">'optimal'</span>,<br>    <span class="code-property">userExperience</span>: <span class="code-string">'exceptional'</span>,<br>    <span class="code-property">result</span>: <span class="code-string">'success'</span><br>  };<br>};</code></pre>
+                </div>
+              </div>
+            </div>
+            <div class="hero-illustration">
+              <div class="floating-card" style="--delay: 0s; --duration: 3s;">
+                <i class="fas fa-mobile-alt"></i>
+                <span>App Mobile</span>
+              </div>
+              <div class="floating-card" style="--delay: 1s; --duration: 4s;">
+                <i class="fas fa-globe"></i>
+                <span>Web Development</span>
+              </div>
+              <div class="floating-card" style="--delay: 2s; --duration: 5s;">
+                <i class="fas fa-cloud"></i>
+                <span>Cloud Solutions</span>
+              </div>
             </div>
           </div>
         </div>
@@ -594,6 +1370,355 @@
             </div>
             <h5>Cloud Solutions</h5>
             <p>Migrazione e gestione di infrastrutture cloud scalabili, sicure e ottimizzate per le performance.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio Section -->
+  <section id="portfolio" class="section">
+    <div class="container">
+      <div class="section-title" data-aos="fade-up">
+        <h2>I nostri <span style="color: var(--primary-color);">Progetti</span></h2>
+        <p>Scopri alcuni dei nostri lavori più recenti che dimostrano la nostra competenza e innovazione.</p>
+      </div>
+      
+      <div class="row g-4">
+        <!-- Progetto 1: E-commerce -->
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="portfolio-card">
+            <div class="portfolio-image">
+              <div style="background: linear-gradient(135deg, #667eea, #764ba2); height: 250px; display: flex; align-items: center; justify-content: center; position: relative;">
+                <i class="fas fa-shopping-cart" style="font-size: 4rem; color: white; opacity: 0.9;"></i>
+                <div class="portfolio-overlay">
+                  <a href="#" class="btn-view-project">Vedi Dettagli</a>
+                </div>
+              </div>
+            </div>
+            <div class="portfolio-content">
+              <h4>Platform E-commerce Avanzata</h4>
+              <p class="project-category">Sviluppo Web</p>
+              <p>Piattaforma e-commerce completa con gestione inventario, pagamenti sicuri, analytics avanzati e sistema di gestione ordini real-time.</p>
+              <div class="project-tags">
+                <span class="tag">React</span>
+                <span class="tag">Node.js</span>
+                <span class="tag">MongoDB</span>
+                <span class="tag">Stripe API</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Progetto 2: App Mobile -->
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="portfolio-card">
+            <div class="portfolio-image">
+              <div style="background: linear-gradient(135deg, #f093fb, #f5576c); height: 250px; display: flex; align-items: center; justify-content: center; position: relative;">
+                <i class="fas fa-mobile-alt" style="font-size: 4rem; color: white; opacity: 0.9;"></i>
+                <div class="portfolio-overlay">
+                  <a href="#" class="btn-view-project">Vedi Dettagli</a>
+                </div>
+              </div>
+            </div>
+            <div class="portfolio-content">
+              <h4>App Fitness & Wellness</h4>
+              <p class="project-category">Sviluppo Mobile</p>
+              <p>Applicazione mobile per il fitness con tracking attività, programmi personalizzati, integrazione wearables e community social.</p>
+              <div class="project-tags">
+                <span class="tag">React Native</span>
+                <span class="tag">Firebase</span>
+                <span class="tag">Google Fit API</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Progetto 3: Sistema Gestionale -->
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+          <div class="portfolio-card">
+            <div class="portfolio-image">
+              <div style="background: linear-gradient(135deg, #4facfe, #00f2fe); height: 250px; display: flex; align-items: center; justify-content: center; position: relative;">
+                <i class="fas fa-chart-line" style="font-size: 4rem; color: white; opacity: 0.9;"></i>
+                <div class="portfolio-overlay">
+                  <a href="#" class="btn-view-project">Vedi Dettagli</a>
+                </div>
+              </div>
+            </div>
+            <div class="portfolio-content">
+              <h4>ERP Cloud Enterprise</h4>
+              <p class="project-category">Software Gestionale</p>
+              <p>Sistema ERP cloud-based con gestione risorse, CRM, contabilità, supply chain e dashboard analytics in tempo reale.</p>
+              <div class="project-tags">
+                <span class="tag">Angular</span>
+                <span class="tag">Java Spring</span>
+                <span class="tag">PostgreSQL</span>
+                <span class="tag">AWS</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Progetto 4: Platform IoT -->
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+          <div class="portfolio-card">
+            <div class="portfolio-image">
+              <div style="background: linear-gradient(135deg, #fa709a, #fee140); height: 250px; display: flex; align-items: center; justify-content: center; position: relative;">
+                <i class="fas fa-network-wired" style="font-size: 4rem; color: white; opacity: 0.9;"></i>
+                <div class="portfolio-overlay">
+                  <a href="#" class="btn-view-project">Vedi Dettagli</a>
+                </div>
+              </div>
+            </div>
+            <div class="portfolio-content">
+              <h4>Smart Home IoT Platform</h4>
+              <p class="project-category">IoT & Embedded</p>
+              <p>Piattaforma IoT per smart home con gestione dispositivi, automazioni, voice control e machine learning per ottimizzazione energetica.</p>
+              <div class="project-tags">
+                <span class="tag">Python</span>
+                <span class="tag">MQTT</span>
+                <span class="tag">Raspberry Pi</span>
+                <span class="tag">TensorFlow</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Progetto 5: Health App -->
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
+          <div class="portfolio-card">
+            <div class="portfolio-image">
+              <div style="background: linear-gradient(135deg, #a8edea, #fed6e3); height: 250px; display: flex; align-items: center; justify-content: center; position: relative;">
+                <i class="fas fa-heartbeat" style="font-size: 4rem; color: white; opacity: 0.9;"></i>
+                <div class="portfolio-overlay">
+                  <a href="#" class="btn-view-project">Vedi Dettagli</a>
+                </div>
+              </div>
+            </div>
+            <div class="portfolio-content">
+              <h4>Healthcare Management System</h4>
+              <p class="project-category">Health Tech</p>
+              <p>Sistema gestione sanitaria con cartelle cliniche digitali, telemedicina, scheduling appointments e analisi predittive.</p>
+              <div class="project-tags">
+                <span class="tag">Vue.js</span>
+                <span class="tag">Django</span>
+                <span class="tag">Docker</span>
+                <span class="tag">HIPAA</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Progetto 6: FinTech -->
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
+          <div class="portfolio-card">
+            <div class="portfolio-image">
+              <div style="background: linear-gradient(135deg, #30cfd0, #330867); height: 250px; display: flex; align-items: center; justify-content: center; position: relative;">
+                <i class="fas fa-coins" style="font-size: 4rem; color: white; opacity: 0.9;"></i>
+                <div class="portfolio-overlay">
+                  <a href="#" class="btn-view-project">Vedi Dettagli</a>
+                </div>
+              </div>
+            </div>
+            <div class="portfolio-content">
+              <h4>Digital Banking Platform</h4>
+              <p class="project-category">FinTech</p>
+              <p>Piattaforma banking digitale con gestione conti, trasferimenti P2P, investimenti e analisi finanziarie con AI.</p>
+              <div class="project-tags">
+                <span class="tag">Flutter</span>
+                <span class="tag">.NET Core</span>
+                <span class="tag">Blockchain</span>
+                <span class="tag">Plaid API</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Call to Action Portfolio -->
+      <div class="text-center mt-5" data-aos="fade-up" data-aos-delay="700">
+        <a href="#contact" class="btn-primary-modern">Scopri Tutti i Progetti</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section id="testimonials" class="section about-section">
+    <div class="container">
+      <div class="section-title" data-aos="fade-up">
+        <h2>Cosa dicono i nostri <span style="color: var(--primary-color);">Clienti</span></h2>
+        <p>Le testimonianze dei clienti che hanno scelto le nostre soluzioni digitali.</p>
+      </div>
+      
+      <div class="row g-4">
+        <!-- Testimonial 1 -->
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="testimonial-card">
+            <div class="testimonial-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+            <p class="testimonial-quote">
+              Onexus ha trasformato completamente il nostro business. La piattaforma e-commerce che hanno sviluppato per noi ha superato ogni aspettativa.
+            </p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">MR</div>
+              <div class="testimonial-info">
+                <h6></h6>
+                <p>CEO, Tech Fashion Store</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Testimonial 2 -->
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="testimonial-card">
+            <div class="testimonial-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+            <p class="testimonial-quote">
+              Il sistema gestionale personalizzato ha ottimizzato i nostri processi interni, risparmiandoci ore di lavoro ogni settimana.
+            </p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">LB</div>
+              <div class="testimonial-info">
+                <h6></h6>
+                <p>Responsabile Operations, Logistica Express</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Testimonial 3 -->
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+          <div class="testimonial-card">
+            <div class="testimonial-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+            <p class="testimonial-quote">
+              Professionalità, competenza e soluzioni innovative. La loro app mobile ha aumentato l'engagement dei nostri clienti del 300%.
+            </p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">GV</div>
+              <div class="testimonial-info">
+                <h6></h6>
+                <p>Marketing Director, Wellness Center</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+       
+        
+       
+      </div>
+    </div>
+  </section>
+
+  <!-- Process Section -->
+  <section id="process" class="section">
+    <div class="container">
+      <div class="section-title" data-aos="fade-up">
+        <h2>Il nostro <span style="color: var(--primary-color);">Processo di Lavoro</span></h2>
+        <p>Metodologia trasparente e collaborativa per garantire risultati eccellenti.</p>
+      </div>
+      
+      <div class="row g-4">
+        <!-- Process Step 1 -->
+        <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="process-card">
+            <div class="process-number">1</div>
+            <div class="process-icon">
+              <i class="fas fa-lightbulb"></i>
+            </div>
+            <h5>Analisi e Ideazione</h5>
+            <p>Ascoltiamo le tue esigenze, analizziamo il mercato e definiamo gli obiettivi del progetto con strategie innovative.</p>
+          </div>
+        </div>
+        
+        <!-- Process Step 2 -->
+        <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="process-card">
+            <div class="process-number">2</div>
+            <div class="process-icon">
+              <i class="fas fa-pencil-ruler"></i>
+            </div>
+            <h5>Design e Progettazione</h5>
+            <p>Creiamo wireframe, prototipi e design UX/UI accattivanti, focalizzati sull'esperienza utente e sulle tue esigenze.</p>
+          </div>
+        </div>
+        
+        <!-- Process Step 3 -->
+        <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+          <div class="process-card">
+            <div class="process-number">3</div>
+            <div class="process-icon">
+              <i class="fas fa-code"></i>
+            </div>
+            <h5>Sviluppo Agile</h5>
+            <p>Implementiamo il codice con metodologie agili, garantendo trasparenza, flessibilità e consegne iterative.</p>
+          </div>
+        </div>
+        
+        <!-- Process Step 4 -->
+        <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+          <div class="process-card">
+            <div class="process-number">4</div>
+            <div class="process-icon">
+              <i class="fas fa-rocket"></i>
+            </div>
+            <h5>Lancio e Supporto</h5>
+            <p>Test approfonditi, deployment sicuro e supporto continuo per garantire performance ottimali nel tempo.</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Process Timeline -->
+      <div class="row mt-5">
+        <div class="col-12">
+          <div class="process-timeline" data-aos="fade-up" data-aos-delay="500">
+            <div class="timeline-content">
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content-inner">
+                  <h6>Timeline Stimata</h6>
+                  <div class="timeline-phases">
+                    <div class="phase">
+                      <span class="phase-name">Discovery</span>
+                      <span class="phase-duration">1-2 settimane</span>
+                    </div>
+                    <div class="phase">
+                      <span class="phase-name">Design</span>
+                      <span class="phase-duration">2-4 settimane</span>
+                    </div>
+                    <div class="phase">
+                      <span class="phase-name">Development</span>
+                      <span class="phase-duration">4-12 settimane</span>
+                    </div>
+                    <div class="phase">
+                      <span class="phase-name">Testing</span>
+                      <span class="phase-duration">1-2 settimane</span>
+                    </div>
+                    <div class="phase">
+                      <span class="phase-name">Launch</span>
+                      <span class="phase-duration">1 settimana</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -711,10 +1836,10 @@
               <h5>Davide </h5>
               <p>Computer Scientist & Founder</p>
               <div class="social-links">
-                <a href="https://www.linkedin.com/in/davide-spatola-169524204" target="_blank">
+                <a href="https://www.linkedin.com/in/" target="_blank">
                   <i class="fab fa-linkedin"></i>
                 </a>
-                <a href="https://www.instagram.com/rigel.ware" target="_blank">
+                <a href="https://www.instagram.com/onexus.it" target="_blank">
                   <i class="fab fa-instagram"></i>
                 </a>
                 <a href="#" target="_blank">
@@ -723,6 +1848,109 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog Section -->
+  <section id="blog" class="section about-section">
+    <div class="container">
+      <div class="section-title" data-aos="fade-up">
+        <h2>Il nostro <span style="color: var(--primary-color);">Blog</span></h2>
+        <p>Condividiamo conoscenze, tendenze e innovazioni del mondo digitale.</p>
+      </div>
+      
+      <div class="row g-4">
+        <!-- Blog Post 1 -->
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="blog-card">
+            <div class="blog-image">
+              <div class="blog-image-gradient">
+                <span class="blog-category">Web Development</span>
+                <i class="fas fa-code" style="font-size: 4rem; color: white; opacity: 0.8;"></i>
+              </div>
+            </div>
+            <div class="blog-content">
+              <div class="blog-meta">
+                <span><i class="fas fa-calendar"></i> 15 Ott 2024</span>
+                <span><i class="fas fa-clock"></i> 5 min lettura</span>
+              </div>
+              <h4>Tendenze Web Development per il 2025</h4>
+              <p>Scopri le tecnologie e i framework che domineranno lo sviluppo web nel prossimo anno, dal Web3 all'AI integrata.</p>
+              <a href="#" class="blog-link">Leggi di più <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Blog Post 2 -->
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="blog-card">
+            <div class="blog-image">
+              <div class="blog-image-gradient" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
+                <span class="blog-category">AI & Machine Learning</span>
+                <i class="fas fa-brain" style="font-size: 4rem; color: white; opacity: 0.8;"></i>
+              </div>
+            </div>
+            <div class="blog-content">
+              <div class="blog-meta">
+                <span><i class="fas fa-calendar"></i> 10 Ott 2024</span>
+                <span><i class="fas fa-clock"></i> 8 min lettura</span>
+              </div>
+              <h4>Intelligenza Artificiale nel Business</h4>
+              <p>Come l'IA sta trasformando i processi aziendali e quali opportunità offre per le piccole e medie imprese.</p>
+              <a href="#" class="blog-link">Leggi di più <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Blog Post 3 -->
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+          <div class="blog-card">
+            <div class="blog-image">
+              <div class="blog-image-gradient" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">
+                <span class="blog-category">Cybersecurity</span>
+                <i class="fas fa-shield-alt" style="font-size: 4rem; color: white; opacity: 0.8;"></i>
+              </div>
+            </div>
+            <div class="blog-content">
+              <div class="blog-meta">
+                <span><i class="fas fa-calendar"></i> 5 Ott 2024</span>
+                <span><i class="fas fa-clock"></i> 6 min lettura</span>
+              </div>
+              <h4>Sicurezza delle Applicazioni moderne</h4>
+              <p>Le best practice per proteggere le tue applicazioni web e mobile dalle minacce informatiche più comuni.</p>
+              <a href="#" class="blog-link">Leggi di più <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Blog CTA -->
+      <div class="text-center mt-5" data-aos="fade-up" data-aos-delay="400">
+        <a href="#" class="btn-primary-modern">Vedi Tutti gli Articoli</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Section -->
+  <section class="newsletter-section">
+    <div class="container">
+      <div class="row justify-content-center text-center">
+        <div class="col-lg-8" data-aos="fade-up">
+          <h2 class="mb-4" style="font-size: 2.5rem; font-weight: 700;">Rimani Aggiornato sulle Novità</h2>
+          <p class="mb-4" style="font-size: 1.25rem; opacity: 0.9;">Iscriviti alla nostra newsletter per ricevere aggiornamenti, tendenze e offerte esclusive.</p>
+          
+          <form class="newsletter-form" data-aos="fade-up" data-aos-delay="200">
+            <div class="newsletter-input-group">
+              <input type="email" class="newsletter-input" placeholder="La tua email professionale" required>
+              <button type="submit" class="btn-newsletter">
+                <i class="fas fa-paper-plane me-2"></i>Iscriviti
+              </button>
+            </div>
+          </form>
+          
+          <p class="mt-3" style="font-size: 0.875rem; opacity: 0.8;">* Rispettiamo la tua privacy. Puoi disiscriverti in qualsiasi momento.</p>
         </div>
       </div>
     </div>
@@ -779,8 +2007,8 @@
           <p>Sviluppiamo soluzioni digitali innovative per far crescere il tuo business. Il nostro team è specializzato in tecnologie all'avanguardia e metodologie moderne.</p>
           <div class="social-links mt-3">
             <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="https://www.linkedin.com/in/davide-spatola-169524204"><i class="fab fa-linkedin"></i></a>
-            <a href="https://www.instagram.com/rigel.ware"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/in/"><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.instagram.com/onexus.it"><i class="fab fa-instagram"></i></a>
           </div>
         </div>
         
@@ -975,6 +2203,164 @@
           preloader.style.display = 'none';
         }, 300);
       }
+    });
+
+    // Hero Section Animations
+    // Animated Counters
+    function animateCounters() {
+      const counters = document.querySelectorAll('.stat-number');
+      const speed = 200;
+      
+      counters.forEach(counter => {
+        const target = +counter.getAttribute('data-target');
+        const increment = target / speed;
+        
+        const updateCount = () => {
+          const count = +counter.innerText;
+          
+          if (count < target) {
+            counter.innerText = Math.ceil(count + increment);
+            setTimeout(updateCount, 10);
+          } else {
+            counter.innerText = target;
+          }
+        };
+        
+        updateCount();
+      });
+    }
+
+    // Intersection Observer for counter animation
+    const counterObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounters();
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    const heroStats = document.querySelector('.hero-stats');
+    if (heroStats) {
+      counterObserver.observe(heroStats);
+    }
+
+    // Particle Effect
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      if (!particlesContainer) return;
+      
+      const particleCount = 50;
+      const colors = ['rgba(255, 255, 255, 0.1)', 'rgba(240, 147, 251, 0.1)', 'rgba(245, 87, 108, 0.1)'];
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.style.position = 'absolute';
+        particle.style.width = Math.random() * 4 + 1 + 'px';
+        particle.style.height = particle.style.width;
+        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.borderRadius = '50%';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.pointerEvents = 'none';
+        particle.style.animation = `floatParticle ${Math.random() * 10 + 10}s linear infinite`;
+        particle.style.animationDelay = Math.random() * 5 + 's';
+        
+        particlesContainer.appendChild(particle);
+      }
+    }
+
+    // Add particle animation to CSS
+    const particleStyle = document.createElement('style');
+    particleStyle.textContent = `
+      @keyframes floatParticle {
+        0% {
+          transform: translateY(100vh) translateX(0);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        90% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100vh) translateX(100px);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(particleStyle);
+
+    // Initialize particles on load
+    createParticles();
+
+    // Typing effect for hero title
+    function typeWriter(element, text, speed = 100) {
+      let i = 0;
+      element.textContent = '';
+      
+      function type() {
+        if (i < text.length) {
+          element.textContent += text.charAt(i);
+          i++;
+          setTimeout(type, speed);
+        }
+      }
+      
+      type();
+    }
+
+    // Initialize typing effect
+    const heroTitle = document.querySelector('.hero h1');
+    if (heroTitle) {
+      const originalText = heroTitle.innerHTML;
+      setTimeout(() => {
+        typeWriter(heroTitle, 'Soluzioni Digitali Innovative', 50);
+      }, 500);
+    }
+
+    // Dynamic mouse parallax effect for hero section
+    document.addEventListener('mousemove', (e) => {
+      const hero = document.querySelector('.hero');
+      if (!hero) return;
+      
+      const x = e.clientX / window.innerWidth;
+      const y = e.clientY / window.innerHeight;
+      
+      const techItems = document.querySelectorAll('.tech-item');
+      const floatingCards = document.querySelectorAll('.floating-card');
+      
+      techItems.forEach((item, index) => {
+        const speed = (index + 1) * 5;
+        const xOffset = (x - 0.5) * speed;
+        const yOffset = (y - 0.5) * speed;
+        item.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+      });
+      
+      floatingCards.forEach((card, index) => {
+        const speed = (index + 1) * 3;
+        const xOffset = (x - 0.5) * speed;
+        const yOffset = (y - 0.5) * speed;
+        card.style.transform = `translate(${xOffset}px, ${yOffset}px) rotate(${xOffset * 0.1}deg)`;
+      });
+    });
+
+    // Enhanced smooth scroll for hero buttons
+    document.querySelectorAll('.btn-primary-modern, .btn-outline-modern').forEach(button => {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = this.getAttribute('href');
+        if (target && target !== '#') {
+          const targetElement = document.querySelector(target);
+          if (targetElement) {
+            targetElement.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        }
+      });
     });
   </script>
 
