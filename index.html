@@ -93,6 +93,49 @@
       font-weight: 700;
       color: var(--primary-color) !important;
       text-decoration: none;
+      margin-right: auto;
+      white-space: nowrap;
+      overflow: visible;
+      display: flex;
+      align-items: center;
+    }
+
+    .brand-content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .brand-main {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+
+    .brand-subtitle {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--text-light);
+      line-height: 1;
+      margin-top: 2px;
+    }
+
+    .brand-description {
+      font-size: 0.6rem;
+      font-weight: 400;
+      color: var(--text-light);
+      line-height: 1;
+      margin-top: 1px;
+    }
+
+    .mobile-only {
+      display: none;
+    }
+
+    .navbar-toggler {
+      margin-left: 0.5rem;
+      padding: 0.25rem 0.5rem;
+      flex-shrink: 0;
     }
 
     .nav-link {
@@ -130,6 +173,37 @@
       background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="grad" cx="50%" cy="50%" r="50%"><stop offset="0%" style="stop-color:rgba(255,255,255,0.1);stop-opacity:1" /><stop offset="100%" style="stop-color:rgba(255,255,255,0);stop-opacity:0" /></radialGradient></defs><circle cx="200" cy="200" r="100" fill="url(%23grad)"/><circle cx="700" cy="300" r="150" fill="url(%23grad)"/><circle cx="400" cy="700" r="120" fill="url(%23grad)"/></svg>') no-repeat center center;
       background-size: cover;
       opacity: 0.3;
+      transition: filter 0.3s ease;
+    }
+
+    /* Enhanced scroll-based blur effects */
+    .hero-scroll-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0);
+      transition: background 0.3s ease;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @media (max-width: 768px) {
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        transition: all 0.3s ease;
+      }
+      
+      .hero-content.scrolled {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 16px;
+        padding: 1.5rem;
+        margin: 1rem;
+      }
     }
 
     .hero-particles {
@@ -269,6 +343,23 @@
       animation: fadeInScale 1s ease-out 0.5s both;
     }
 
+    /* Service section positioning fix */
+    .section-title p {
+      position: relative;
+      z-index: 5;
+      background: rgba(248, 250, 252, 0.9);
+      padding: 0.5rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .section-title p {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(5px);
+      }
+    }
+
     @keyframes fadeInScale {
       from { opacity: 0; transform: scale(0.9); }
       to { opacity: 1; transform: scale(1); }
@@ -397,6 +488,7 @@
       display: inline-block;
       transition: all 0.3s ease;
       margin-left: 1rem;
+      min-width: auto;
     }
 
     .btn-outline-modern:hover {
@@ -655,8 +747,107 @@
 
     /* Responsive */
     @media (max-width: 768px) {
+      .navbar-brand {
+        font-size: 1.2rem;
+        flex-shrink: 0;
+        margin-right: 0.5rem;
+        max-width: calc(100% - 80px);
+      }
+
+      .brand-content {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        line-height: 1.2;
+      }
+
+      .brand-main {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        line-height: 1.2;
+      }
+
+      .brand-subtitle {
+        display: block;
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--text-light);
+        line-height: 1.1;
+        margin-top: 2px;
+        white-space: normal;
+        max-width: 100%;
+      }
+
+      .brand-description {
+        display: block;
+        font-size: 0.55rem;
+        font-weight: 400;
+        color: var(--text-light);
+        line-height: 1.1;
+        margin-top: 1px;
+        white-space: normal;
+        max-width: 100%;
+      }
+
+      .mobile-only {
+        display: block;
+      }
+
+      /* Ensure navbar container has proper spacing */
+      .navbar .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: auto;
+      }
+
+      /* Adjust navbar height for expanded brand */
+      .navbar {
+        min-height: 70px;
+        padding: 0.75rem 0;
+      }
+
+      .navbar.scrolled {
+        min-height: 60px;
+        padding: 0.5rem 0;
+      }
+      
       .hero h1 {
         font-size: 2.5rem;
+      }
+
+      /* Additional optimizations for very small screens */
+      @media (max-width: 480px) {
+        .navbar-brand {
+          max-width: calc(100% - 70px);
+        }
+
+        .brand-subtitle {
+          font-size: 0.6rem;
+        }
+
+        .brand-description {
+          font-size: 0.5rem;
+        }
+
+        .navbar {
+          min-height: 65px;
+          padding: 0.5rem 0;
+        }
+
+        .navbar.scrolled {
+          min-height: 50px;
+          padding: 0.6rem 0;
+        }
+      }
+
+      /* Ensure text doesn't overflow on mobile */
+      .brand-subtitle,
+      .brand-description {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
       }
       
       .section-title h2 {
@@ -666,6 +857,32 @@
       .btn-outline-modern {
         margin-left: 0;
         margin-top: 1rem;
+      }
+      
+      .hero-code {
+        position: relative;
+        z-index: 10;
+        margin-top: 2rem;
+      }
+      
+      .code-window {
+        max-width: 100%;
+        overflow: hidden;
+      }
+      
+      .hero-buttons {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .btn-primary-modern,
+      .btn-outline-modern {
+        width: 100%;
+        text-align: center;
+        margin-left: 0;
+        margin-top: 0.5rem;
+        padding: 12px 24px;
+        min-width: 200px;
       }
     }
 
@@ -1168,7 +1385,12 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#home">Onexus</a>
+      <a class="navbar-brand" href="#home">
+        <div class="brand-content">
+          <span class="brand-main">Onexus</span>
+   
+        </div>
+      </a>
       
       <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
@@ -1309,7 +1531,7 @@
     <div class="container">
       <div class="section-title" data-aos="fade-up">
   <h2>I nostri <span style="color: var(--primary-color);">Servizi</span></h2>
-        <p><span style="color: #000000;">Offriamo una vasta gamma di servizi per soddisfare le esigenze del tuo business digitale.</span></p>
+        <span style="color: #000000;">Offriamo una vasta gamma di servizi per soddisfare le esigenze del tuo business digitale.</span>
       </div>
       
       <div class="row g-4">
@@ -2138,12 +2360,49 @@
       observer.observe(el);
     });
 
-    // Parallax effect for hero section
+    // Enhanced scroll effects for hero section
     window.addEventListener('scroll', function() {
       const scrolled = window.pageYOffset;
       const hero = document.querySelector('.hero');
+      const heroContent = document.querySelector('.hero-content');
+      const scrollOverlay = document.querySelector('.hero-scroll-overlay');
+      
       if (hero) {
+        // Parallax effect
         hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+        
+        // Progressive blur effect on hero background
+        const blurAmount = Math.min(scrolled * 0.015, 6);
+        hero.style.filter = `blur(${blurAmount}px)`;
+        
+        // Darken overlay for better text readability
+        if (scrollOverlay) {
+          const overlayOpacity = Math.min(scrolled * 0.001, 0.3);
+          scrollOverlay.style.background = `rgba(0, 0, 0, ${overlayOpacity})`;
+        }
+        
+        // Enhance text readability on mobile when scrolling
+        if (window.innerWidth <= 768 && heroContent) {
+          if (scrolled > 150) {
+            heroContent.classList.add('scrolled');
+            
+            // Add text shadow for better contrast
+            const textElements = heroContent.querySelectorAll('h1, p, .hero-badge');
+            textElements.forEach(element => {
+              element.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 0.8)';
+              element.style.color = 'rgba(255, 255, 255, 0.95)';
+            });
+          } else {
+            heroContent.classList.remove('scrolled');
+            
+            // Remove text shadow when at top
+            const textElements = heroContent.querySelectorAll('h1, p, .hero-badge');
+            textElements.forEach(element => {
+              element.style.textShadow = '';
+              element.style.color = '';
+            });
+          }
+        }
       }
     });
 
