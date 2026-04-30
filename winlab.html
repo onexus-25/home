@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winlab - Offerta Sviluppo e Configurazione | Onexus</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+         :root {
+            --primary-blue: #0A3A66;
+            --secondary-blue: #1A73E8;
+            --accent-blue: #E8F0FE;
+            --dark-grey: #333333;
+            --text-grey: #5F6368;
+            --light-grey: #F8F9FA;
+            --border-color: #DADCE0;
+            --white: #FFFFFF;
+            --success: #34A853;
+            --warning: #FBBC04;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #1a1a2e;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: var(--white);
+            padding: 60px 0;
+            text-align: center;
+            border-bottom: 5px solid var(--warning);
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 16px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            position: relative;
+        }
+
+        header .subtitle {
+            font-size: 1.4rem;
+            opacity: 0.95;
+            font-weight: 400;
+            position: relative;
+            margin-bottom: 8px;
+        }
+
+        section {
+            padding: 80px 0;
+            background: white;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        section:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: #1e3a5f;
+            margin-bottom: 16px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .section-title p {
+            font-size: 1.15rem;
+            color: #64748b;
+            max-width: 650px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            margin-top: 50px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 36px;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(30, 58, 95, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #e9ecef;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #2c5282, #3d6a96);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(30, 58, 95, 0.12);
+        }
+
+        .feature-card h3 {
+            color: #1e3a5f;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-card ul {
+            list-style: none;
+        }
+
+        .feature-card li {
+            padding: 10px 0;
+            padding-left: 32px;
+            position: relative;
+            color: #4a5568;
+            font-size: 0.95rem;
+        }
+
+        .feature-card li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #2c5282;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .hero-section {
+            background: white;
+            text-align: center;
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-content h2 {
+            font-size: 2.2rem;
+            color: #1e3a5f;
+            margin-bottom: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-content p {
+            font-size: 1.15rem;
+            color: #4a5568;
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+
+        .hero-badges {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            color: #1e3a5f;
+            font-size: 0.95rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            border: 1px solid #dee2e6;
+        }
+
+        .pricing-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+            margin-top: 40px;
+        }
+
+        .pricing-table thead {
+            background: linear-gradient(135deg, #1e3a5f, #2c5282);
+            color: white;
+        }
+
+        .pricing-table th {
+            padding: 20px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1rem;
+            border-bottom: 3px solid #3d6a96;
+        }
+
+        .pricing-table td {
+            padding: 18px 20px;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 0.95rem;
+            color: #4a5568;
+        }
+
+        .pricing-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .pricing-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .price {
+            color: #2c5282;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .price-small {
+            font-size: 0.85rem;
+            color: #64748b;
+            font-style: italic;
+        }
+
+        .price-strike {
+            text-decoration: line-through;
+            color: #94a3b8;
+            font-size: 0.9em;
+            margin-right: 12px;
+        }
+
+        .included {
+            color: #059669;
+            font-weight: 600;
+        }
+
+        .extra {
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .inclusion-exclusion-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        @media (max-width: 768px) {
+            .inclusion-exclusion-box {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .inclusion-section, .exclusion-section {
+            background: white;
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            border: 2px solid #e9ecef;
+        }
+
+        .inclusion-section {
+            border-left: 5px solid #059669;
+        }
+
+        .exclusion-section {
+            border-left: 5px solid #ef4444;
+        }
+
+        .inclusion-section h4, .exclusion-section h4 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #1e3a5f;
+            font-weight: 700;
+        }
+
+        .inclusion-section ul, .exclusion-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .inclusion-section li, .exclusion-section li {
+            padding: 10px 0;
+            padding-left: 32px;
+            position: relative;
+            color: #4a5568;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .inclusion-section li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #059669;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .exclusion-section li::before {
+            content: "✗";
+            position: absolute;
+            left: 0;
+            color: #ef4444;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .terms-box {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 36px;
+            border-radius: 12px;
+            margin-top: 50px;
+            border: 2px solid #dee2e6;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+
+        .terms-box h4 {
+            color: #1e3a5f;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .terms-box p {
+            color: #4a5568;
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        .terms-box strong {
+            color: #1e3a5f;
+        }
+
+        .signature-block {
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding-top: 20px;
+            border-top: 1px dashed #ccc;
+        }
+
+        .signature-line {
+            width: 300px;
+            margin-top: 30px;
+            border-bottom: 1px solid #1a1a2e;
+        }
+
+        .optional-modules {
+            margin-top: 60px;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+            border: 2px solid #e9ecef;
+        }
+
+        .optional-modules h3 {
+            color: #1e3a5f;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .optional-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .optional-item {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            padding: 28px;
+            border-radius: 12px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .optional-item h4 {
+            color: #1e3a5f;
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .optional-item p {
+            color: #64748b;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .price-tag {
+            background: linear-gradient(135deg, #2c5282, #3d6a96);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        footer {
+            background: #1a1a2e;
+            color: white;
+            text-align: center;
+            padding: 50px 0;
+        }
+
+        footer .company-name {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        footer p {
+            color: rgba(255,255,255,0.7);
+            margin: 5px 0;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.2rem; }
+            header .subtitle { font-size: 1.1rem; }
+            .section-title h2 { font-size: 1.8rem; }
+            .pricing-table { font-size: 0.85rem; }
+            .pricing-table th, .pricing-table td { padding: 12px 10px; }
+        }
+
+        .info-alert {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            border-left: 5px solid #f59e0b;
+            padding: 24px;
+            border-radius: 8px;
+            margin: 40px 0;
+            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.15);
+        }
+
+        .info-alert h4 {
+            color: #92400e;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-alert p {
+            color: #78350f;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        /* =========================================================
+           STILI OTTIMIZZATI PER LA STAMPA A4 FLUIDA (SENZA SPAZI BIANCHI)
+           ========================================================= */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 12mm 15mm; /* Margini ridotti per usare più spazio */
+            }
+
+            body {
+                background: #ffffff !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                font-size: 0.95rem; /* Testo leggermente più compatto */
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            .container {
+                max-width: 100% !important;
+                padding: 0 !important;
+            }
+
+            /* Rimuove padding e margini inutili che sprecano carta */
+            section {
+                padding: 20px 0 !important;
+                border: none !important;
+            }
+
+            header { padding: 30px 0 !important; margin-bottom: 10px !important; }
+            .hero-section { padding: 20px 0 !important; }
+            .section-title { margin-bottom: 20px !important; }
+            .features-grid { margin-top: 20px !important; gap: 16px !important; }
+
+            /* =======================================================
+               IL SEGRETO PER LA FLUIDITÀ: Niente salti pagina forzati.
+               Impediamo solo che le singole card o righe vengano 
+               tagliate a metà tra un foglio e l'altro.
+               ======================================================= */
+            .feature-card, .pricing-table, .pricing-table tr, .inclusion-section, 
+            .exclusion-section, .info-alert, .terms-box, .optional-item, .hero-badges, 
+            .signature-block, .section-title {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            /* Rimuove ombre sgranate nel PDF ma mantiene i riquadri puliti */
+            .feature-card, .pricing-table, .inclusion-section, .exclusion-section, 
+            .optional-modules, .terms-box, .badge {
+                box-shadow: none !important;
+                border: 1px solid #dee2e6 !important;
+            }
+
+            a { text-decoration: none !important; color: inherit !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="no-print" style="text-align: center; padding: 20px; background: #f8f9fa; border-bottom: 1px solid #ddd;">
+        <button onclick="window.print()" style="padding: 12px 24px; cursor: pointer; background: #0A3A66; color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 16px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+            🖨️ Salva come PDF / Stampa A4
+        </button>
+    </div>
+
+    <header>
+        <div class="container">
+            <h1>Winlab</h1>
+            <p class="subtitle">Sistema Gestionale Cloud per Laboratori di Analisi Materiali</p>
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <div class="container hero-content">
+            <h2>Una soluzione completa per il tuo laboratorio</h2>
+            <p>Winlab è la piattaforma cloud-based progettata specificamente per laboratori di analisi materiali edili. Gestisci clienti, certificati, preventivi e documenti in un'unica interfaccia moderna e intuitiva, accessibile da qualsiasi dispositivo.</p>
+            
+            <div class="hero-badges">
+                <div class="badge">☁️ 100% Cloud-Based</div>
+                <div class="badge">📱 Multi-Dispositivo</div>
+                <div class="badge">🔒 Sicuro e Affidabile</div>
+                <div class="badge">⚡ Sempre Aggiornato</div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-title">
+                <h2>Funzionalità Principali</h2>
+                <p>Una suite completa di strumenti per digitalizzare e ottimizzare ogni aspetto del tuo laboratorio</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>📋 Gestione Clienti e Pratiche</h3>
+                    <ul>
+                        <li>Anagrafica clienti completa e organizzata</li>
+                        <li>Storico dettagliato di tutte le pratiche</li>
+                        <li>Ricerca rapida e filtri avanzati</li>
+                        <li>Note e documenti associati</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <h3>📄 Sistema Documentale Intelligente</h3>
+                    <ul>
+                        <li>Template personalizzabili per certificati</li>
+                        <li>Compilazione automatica dal database</li>
+                        <li>Generazione PDF professionale</li>
+                        <li>Archiviazione e versionamento automatico</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <h3>💰 Gestione Amministrativa</h3>
+                    <ul>
+                        <li>Creazione preventivi e fatture</li>
+                        <li>Monitoraggio crediti e scadenze</li>
+                        <li>Report economici dettagliati</li>
+                        <li>Esportazione dati</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <h3>📊 Dashboard e Analytics</h3>
+                    <ul>
+                        <li>Grafici interattivi per analisi dati</li>
+                        <li>Report personalizzabili</li>
+                        <li>Supporto decisionale strategico</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <h3>💬 Comunicazione Automatizzata</h3>
+                    <ul>
+                        <li>Notifiche email personalizzate</li>
+                        <li>Integrazione WhatsApp Business</li>
+                        <li>Invio automatico certificati</li>
+                        <li>Promemoria scadenze</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <h3>🔧 Flessibilità e Scalabilità</h3>
+                    <ul>
+                        <li>Gestione multi-utente con permessi</li>
+                        <li>Moduli opzionali componibili</li>
+                        <li>Personalizzazione workflow</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-title">
+                <h2>Pacchetti Disponibili</h2>
+                <p>Scegli la soluzione più adatta alle dimensioni e alle esigenze del tuo laboratorio</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>📦 Pacchetto Base</h3>
+                    <ul>
+                        <li>Fino a 3 utenti simultanei</li>
+                        <li>Gestione clienti e pratiche</li>
+                        <li>Sistema documentale smart</li>
+                        <li>Modulo amministrativo completo</li>
+                        <li>Archiviazione certificati</li>
+                        <li>Report crediti ed esportazioni</li>
+                    </ul>
+                    <div style="text-align: center; margin-top: 24px;">
+                        <div class="price">€ 149/mese</div>
+                        <div class="price-small">oppure € 1.490/anno</div>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <h3>🚀 Pacchetto Professional</h3>
+                    <ul>
+                        <li>Fino a 10 utenti simultanei</li>
+                        <li>Tutte le funzionalità del Base</li>
+                        <li>Dashboard BI avanzata</li>
+                        <li>Analytics e KPI interattivi</li>
+                        <li>Integrazione WhatsApp Business</li>
+                        <li>Notifiche automatiche clienti</li>
+                    </ul>
+                    <div style="text-align: center; margin-top: 24px;">
+                        <div class="price">€ 190/mese</div>
+                        <div class="price-small">oppure € 2.280/anno</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-title">
+                <h2>Offerta Tecnica</h2>
+                <p>Descrizione dettagliata delle funzionalità e servizi inclusi</p>
+            </div>
+
+            <table class="pricing-table">
+                <thead>
+                    <tr>
+                        <th>Voce</th>
+                        <th>Descrizione Dettagliata</th>
+                        <th>Pacchetto Base</th>
+                        <th>Pacchetto Professional</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Setup, Configurazione e Formazione</strong></td>
+                        <td>Creazione ambiente cloud dedicato, migrazione dati anagrafici essenziali, 12 ore di formazione remota al personale</td>
+                        <td><span class="price">€ 3.000,00</span><br><small>Una tantum (1° anno)</small></td>
+                        <td><span class="price">€ 3.000,00</span><br><small>Una tantum (1° anno)</small></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Licenza Winlab - Accesso Piattaforma</strong></td>
+                        <td>Accesso multipiattaforma da qualsiasi dispositivo, sistema cloud-based, 24/7 availability</td>
+                        <td><span class="included">✓ Incluso</span></td>
+                        <td><span class="included">✓ Incluso</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Licenza Winlab - Utenti Base</strong></td>
+                        <td>Numero di utenti abilitati con accesso completo al sistema</td>
+                        <td>Fino a 3 utenti</td>
+                        <td>Fino a 10 utenti</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Licenza Winlab - Motore Documentale Smart</strong></td>
+                        <td>Template e Variabili: creazione template con editor di default, formule e variabili dinamiche, compilazione automatica dal database, compatibile con Word, LibreOffice</td>
+                        <td><span class="included">✓ Incluso</span></td>
+                        <td><span class="included">✓ Incluso</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Licenza Winlab - Gestione Certificati</strong></td>
+                        <td>Archiviazione automatica, versionamento documentale, ricerca avanzata, esportazione in multi-formato</td>
+                        <td><span class="included">✓ Incluso</span></td>
+                        <td><span class="included">✓ Incluso</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Licenza Winlab - Modulo Amministrativo</strong></td>
+                        <td>Report Crediti + Esportazione: monitoraggio posizioni debitorie, analisi clienti insolventi, esportazione dati (CSV/Excel), dashboard dedicate</td>
+                        <td><span class="included">✓ Incluso</span></td>
+                        <td><span class="included">✓ Incluso</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Licenza Winlab - Dashboard BI</strong></td>
+                        <td>Dashboard direzionale per manager: visualizzazione andamento spese, analisi ricavi dettagliata, grafici e KPI interattivi, supporto decisionale mirato</td>
+                        <td><span class="extra">✗ Non disponibile</span></td>
+                        <td><span class="included">✓ Incluso</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Licenza Winlab - Integrazione WhatsApp</strong></td>
+                        <td>Per invio comunicazioni ordinarie e notifiche automatiche ai clienti (es. "Il tuo certificato è pronto")</td>
+                        <td><span class="extra">✗ Non disponibile</span></td>
+                        <td><span class="included">✓ Incluso</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-alert">
+                <h4>ℹ️ Informazioni importanti</h4>
+                <p>Questa offerta è relativa esclusivamente allo <strong>sviluppo iniziale, configurazione e consegna della piattaforma</strong>. Il cliente riceverà un sistema completo e funzionante, pronto all'uso con formazione inclusa. Le licenze software garantiscono l'accesso continuativo alla piattaforma con tutte le funzionalità del pacchetto selezionato.</p>
+            </div>
+
+            <div class="inclusion-exclusion-box">
+                <div class="inclusion-section">
+                    <h4>✅ Cosa è incluso</h4>
+                    <ul>
+                        <li>Sviluppo e configurazione completa della piattaforma Winlab</li>
+                        <li>Creazione ambiente cloud dedicato</li>
+                        <li>Migrazione dei dati anagrafici essenziali</li>
+                        <li>12 ore di formazione remota al personale</li>
+                        <li>Accesso alla piattaforma con le licenze selezionate</li>
+                        <li>Utilizzo di tutte le funzionalità del pacchetto scelto</li>
+                        <li>Garanzia di corretto funzionamento alla consegna</li>
+                    </ul>
+                </div>
+                <div class="exclusion-section">
+                    <h4>❌ Cosa NON è incluso</h4>
+                    <ul>
+                        <li><strong>Manutenzione ordinaria</strong> e straordinaria del sistema</li>
+                        <li><strong>Supporto tecnico</strong> post-implementazione</li>
+                        <li><strong>Aggiornamenti</strong> software e nuove funzionalità</li>
+                        <li><strong>Backup</strong> e disaster recovery</li>
+                        <li><strong>Monitoraggio</strong> proattivo del sistema</li>
+                        <li><strong>Assistenza</strong> continuativa</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section-title" style="margin-top: 60px;">
+                <h2>Offerta Economica</h2>
+                <p>Costi dettagliati per ciascuna soluzione</p>
+            </div>
+
+            <table class="pricing-table">
+                <thead>
+                    <tr>
+                        <th>Voce</th>
+                        <th>Pacchetto Base</th>
+                        <th>Pacchetto Professional</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Setup, Configurazione e Formazione</strong></td>
+                        <td class="price">€ 3.000,00</td>
+                        <td class="price">€ 3.000,00</td>
+                    </tr>
+                    <tr>
+                        <td><em>Una tantum (1° anno)</em></td>
+                        <td class="price-small">Creazione ambiente cloud, migrazione dati, 12 ore formazione</td>
+                        <td class="price-small">Creazione ambiente cloud, migrazione dati, 12 ore formazione</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Costo Mensile Licenza</strong></td>
+                        <td class="price">€ 149,00</td>
+                        <td class="price">€ 190,00</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Costo Annuale Licenza</strong></td>
+                        <td class="price">€ 1.490,00 </td>
+                        <td class="price">€ 2.280,00 </td>
+                    </tr>
+                    <tr>
+                        <td><strong>TOTALE 2026</strong></td>
+                        <td class="price" style="color: #2c5282; font-size: 1.4rem;"><span class="price-strike">€ 4.490,00</span>€ 3.490,00</td>
+                        <td class="price" style="color: #2c5282; font-size: 1.4rem;"><span class="price-strike">€ 5.280,00</span>€ 4.280,00</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" style="text-align: center; padding: 15px; background: #f8f9fa; font-size: 0.9rem; color: #666; font-style: italic;">* Il costo va inteso al netto di IVA</td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <div class="optional-modules">
+                <h3>Moduli Opzionali</h3>
+                <div class="optional-grid">
+                    <div class="optional-item">
+                        <h4>QR Code Pagamenti</h4>
+                        <p>Integrazione di un QR code direttamente in fattura per facilitare e tracciare i pagamenti rapidi dei clienti. Include notifiche automatiche all'azienda.</p>
+                        <div class="price-tag">Costo aggiuntivo: € 49,00/mese</div>
+                    </div>
+                    <div class="optional-item">
+                        <h4>Utenti Aggiuntivi</h4>
+                        <p>Pacchetto di 5 utenti supplementari per il pacchetto Professional. Include tutti i permessi e le funzionalità principali.</p>
+                        <div class="price-tag">Costo aggiuntivo: € 99,00/mese</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="terms-box">
+                <h4>Termini e Condizioni</h4>
+                <p><strong>Natura della fornitura:</strong> Questa offerta riguarda lo sviluppo, configurazione e consegna della piattaforma Winlab. Il fornitore si impegna a consegnare un sistema completo, configurato e funzionante, accompagnato da formazione dedicata al personale del cliente.</p>
+                <p style="margin-top: 12px;"><strong>Autonomia del cliente:</strong> Una volta completata l'implementazione e la formazione, il cliente acquisisce piena autonomia nell'utilizzo del software e nella gestione delle licenze attive.</p>
+                <p style="margin-top: 12px;"><strong>Servizi addizionali:</strong> Eventuali necessità di supporto tecnico, manutenzione, aggiornamenti o assistenza post-implementazione potranno essere concordate separatamente attraverso un contratto di servizio dedicato, personalizzato in base alle esigenze specifiche del cliente.</p>
+                <p style="margin-top: 12px;"><strong>Garanzia iniziale:</strong> Garantiamo il corretto funzionamento della piattaforma al momento della consegna. Eventuali bug o anomalie tecniche rilevate saranno corretti senza costi aggiuntivi entro 30 giorni dalla consegna finale del progetto.</p>
+                
+                <!-- Spazio aggiunto per Timbro e Firma -->
+                <div class="signature-block">
+                    <div>
+                        <p style="font-weight: 700; color: #1e3a5f;">Luogo e Data</p>
+                        <div class="signature-line"></div>
+                    </div>
+                    <div>
+                        <p style="font-weight: 700; color: #1e3a5f;">Timbro e Firma </p>
+                        <div class="signature-line"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p class="company-name">ONEXUS</p>
+            <p>Software Solutions per Laboratori di Analisi Materiali Edili</p>
+            <p class="copyright">&copy; 2026 Onexus - Tutti i diritti riservati </p>
+            <a href="https://www.onexus.it">Visita il sito Onexus</a>
+        </div>
+    </footer>
+</body>
+</html>
