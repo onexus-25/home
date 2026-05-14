@@ -1,0 +1,1509 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Editor - Davide Spatola</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+/* =====================================================
+   VARIABILI & RESET ORIGINALI CV
+===================================================== */
+:root {
+    --primary-color: #0066cc;
+    --dark-color: #333333;
+    --light-gray-color: #f4f4f4;
+    --border-color: #e0e0e0;
+    --text-color: #5c6f82;
+    --editor-bg: #141922;
+    --editor-border: #2a3548;
+    --editor-accent: #0066cc;
+    --editor-hover: #1e2d42;
+    --editor-text: #c8d6e5;
+    --editor-label: #6a8099;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Titillium Web', sans-serif;
+    background-color: #1a2332;
+    color: var(--dark-color);
+    line-height: 1.6;
+    font-weight: 300;
+    padding-top: 64px;
+}
+
+/* =====================================================
+   TOOLBAR EDITOR - RESPONSIVE & OTTIMIZZATA
+===================================================== */
+#editor-toolbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    min-height: 64px;
+    height: auto; /* Permette alla barra di espandersi se i pulsanti vanno a capo */
+    background: var(--editor-bg);
+    border-bottom: 1px solid var(--editor-border);
+    display: flex;
+    flex-wrap: wrap; /* Fondamentale per la responsività */
+    align-items: center;
+    padding: 8px 16px;
+    gap: 8px;
+    z-index: 9999;
+}
+
+.tb-logo {
+    font-family: 'Titillium Web', sans-serif;
+    font-weight: 700;
+    font-size: 0.9em;
+    color: var(--primary-color);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    margin-right: 10px;
+    padding-right: 15px;
+    border-right: 2px solid var(--editor-border);
+}
+
+.tb-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    background: rgba(255,255,255,0.03); /* Leggero sfondo per distinguere i gruppi */
+    border-radius: 6px;
+    border: 1px solid var(--editor-border);
+}
+
+/* Nasconde le etichette dei gruppi su mobile per risparmiare spazio */
+@media (max-width: 900px) {
+    .tb-label { display: none; }
+    .tb-group { padding: 4px; }
+}
+
+.tb-label {
+    font-size: 0.65em;
+    font-weight: 700;
+    color: var(--editor-label);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-right: 4px;
+}
+
+.tb-btn {
+    background: #2a3548;
+    color: var(--editor-text);
+    border: 1px solid var(--editor-border);
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8em;
+    font-weight: 600;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+.tb-btn:hover {
+    background: var(--primary-color);
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+/* Ottimizzazione per schermi molto piccoli (Smartphone) */
+@media (max-width: 600px) {
+    #editor-toolbar {
+        padding: 6px;
+        gap: 4px;
+    }
+    .tb-btn {
+        padding: 6px 8px;
+        font-size: 0.7em;
+    }
+    .tb-btn span:not(.ico) {
+        display: none; /* Mostra solo le icone per risparmiare spazio */
+    }
+    body {
+        padding-top: 110px; /* Aumenta il margine superiore del corpo perché la barra è più alta */
+    }
+}
+
+/* =====================================================
+   CONTENITORE CV
+===================================================== */
+.cv-wrapper {
+    max-width: 940px;
+    margin: 24px auto 60px;
+    position: relative;
+}
+
+.editor-hint {
+    background: rgba(0, 102, 204, 0.12);
+    border: 1px solid rgba(0, 102, 204, 0.3);
+    border-radius: 6px;
+    padding: 8px 16px;
+    margin-bottom: 12px;
+    font-family: 'Titillium Web', sans-serif;
+    font-size: 0.8em;
+    color: #7db3e8;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.editor-hint .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #0066cc;
+    animation: pulse 1.5s ease-in-out infinite;
+    flex-shrink: 0;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(0.8)} }
+
+/* =====================================================
+   LAYOUT CV ORIGINALE
+===================================================== */
+.container {
+    display: flex;
+    background: #fff;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+    border-radius: 2px;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 35%;
+    padding: 30px;
+    background-color: #f9f9f9;
+    border-right: 1px solid var(--border-color);
+    min-height: 100%;
+}
+.sidebar h2 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 5px;
+}
+.contact-info ul { list-style: none; }
+.contact-info li { margin-bottom: 15px; display: flex; align-items: center; }
+.contact-info li svg { width: 18px; height: 18px; margin-right: 10px; fill: var(--primary-color); flex-shrink: 0; }
+.contact-info a { text-decoration: none; color: var(--dark-color); transition: color 0.3s; word-break: break-all; }
+.contact-info a:hover { color: var(--primary-color); }
+.skills-list, .languages-list { list-style: none; }
+.skills-list li, .languages-list li { margin-bottom: 10px; }
+.qr-code { text-align: center; margin-top: 30px; }
+.qr-code img { width: 120px; height: 120px; }
+.qr-code p { font-size: 0.8em; color: var(--text-color); margin-top: 5px; }
+.badge-container { margin-top: 30px; }
+.badge-grid { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+.badge { text-align: center; flex: 1 1 30%; max-width: 130px; display: flex; flex-direction: column; align-items: center; }
+.badge img { width: 100px; height: 100px; margin-top: 5px; }
+.badge p { font-size: 0.75em; line-height: 1.2; color: var(--text-color); margin-bottom: 5px; min-height: 35px; }
+.badge a { font-size: 0.8em; color: var(--primary-color); text-decoration: none; font-weight: 600; margin-top: 5px; }
+
+/* Contenuto principale */
+.main-content { width: 65%; padding: 40px; }
+.header h1 { font-size: 2.5em; font-weight: 700; color: var(--dark-color); margin-bottom: 5px; }
+.header h3 { font-size: 1.3em; font-weight: 400; color: var(--primary-color); margin-bottom: 25px; }
+.main-content h2 {
+    color: var(--primary-color);
+    font-size: 1.4em;
+    font-weight: 600;
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border-color);
+}
+.section { margin-bottom: 30px; }
+.section p { color: var(--text-color); }
+.job, .project, .education-item { margin-bottom: 25px; }
+.job-title, .project-title, .degree { font-size: 1.1em; font-weight: 600; color: var(--dark-color); }
+.company, .education-institution { font-weight: 400; color: var(--primary-color); }
+.date { font-size: 0.9em; color: var(--text-color); font-style: italic; }
+.job-description, .project-description { margin-top: 10px; list-style-position: outside; padding-left: 20px; }
+.job-description li, .project-description li { margin-bottom: 8px; color: var(--text-color); }
+.tech-tags { margin-top: 10px; }
+.tag { display: inline-block; background-color: var(--light-gray-color); color: var(--text-color); padding: 3px 10px; border-radius: 15px; font-size: 0.8em; margin-right: 5px; margin-bottom: 5px; }
+.cv-link { color: var(--primary-color); font-weight: 600; text-decoration: none; }
+.cv-link:hover { text-decoration: underline; }
+
+/* =====================================================
+   STILI EDITOR OVERLAY
+===================================================== */
+
+/* Testo editabile */
+[contenteditable] {
+    outline: none;
+    transition: background 0.15s, box-shadow 0.15s;
+    border-radius: 2px;
+    min-width: 10px;
+    display: inline-block;
+}
+[contenteditable]:hover {
+    background: rgba(0,102,204,0.06);
+    box-shadow: 0 0 0 2px rgba(0,102,204,0.2);
+}
+[contenteditable]:focus {
+    background: rgba(0,102,204,0.08);
+    box-shadow: 0 0 0 2px rgba(0,102,204,0.5);
+}
+[contenteditable][data-block="true"] { display: block; }
+
+/* Blocchi editabili (job, education-item, project, li) */
+.eb {
+    position: relative;
+}
+.eb::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border: 1px dashed transparent;
+    border-radius: 4px;
+    pointer-events: none;
+    transition: border-color 0.15s;
+}
+.eb:hover::after {
+    border-color: rgba(0,102,204,0.25);
+}
+
+.eb-controls {
+    position: absolute;
+    top: 2px;
+    right: -38px;
+    display: none;
+    flex-direction: column;
+    gap: 3px;
+    z-index: 100;
+}
+.eb:hover .eb-controls,
+.eb:focus-within .eb-controls {
+    display: flex;
+}
+
+.eb-btn {
+    width: 28px; height: 28px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    font-family: 'Titillium Web', sans-serif;
+}
+.eb-del { background: #fff0f0; color: #c0392b; }
+.eb-del:hover { background: #c0392b; color: white; }
+.eb-up { background: #f0f4ff; color: #1565c0; }
+.eb-up:hover { background: #1565c0; color: white; }
+.eb-dn { background: #f0f4ff; color: #1565c0; }
+.eb-dn:hover { background: #1565c0; color: white; }
+.eb-dup { background: #f0fff4; color: #27ae60; }
+.eb-dup:hover { background: #27ae60; color: white; }
+
+/* Sezione editabile */
+.section.eb .eb-controls { top: 4px; right: -38px; }
+
+/* Pulsante + in fondo alle sezioni */
+.add-row {
+    text-align: center;
+    padding: 6px 0 2px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+.section:hover .add-row,
+.contact-info:hover .add-row,
+.skills:hover .add-row,
+.languages:hover .add-row {
+    opacity: 1;
+}
+.add-row-btn {
+    background: transparent;
+    border: 1px dashed rgba(0,102,204,0.4);
+    color: var(--primary-color);
+    font-size: 0.75em;
+    font-family: 'Titillium Web', sans-serif;
+    font-weight: 600;
+    padding: 3px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+.add-row-btn:hover { background: var(--primary-color); color: white; border-style: solid; }
+
+/* Evidenziazione sezione selezionata */
+.section-selected {
+    outline: 2px solid rgba(0,102,204,0.4) !important;
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+/* Modal link */
+#link-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+}
+#link-modal.open { display: flex; }
+.modal-box {
+    background: #1e2d42;
+    border: 1px solid var(--editor-border);
+    border-radius: 10px;
+    padding: 24px;
+    width: 380px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.modal-box h3 { color: #fff; font-family: 'Titillium Web', sans-serif; font-size: 1em; margin-bottom: 16px; letter-spacing: 0.5px; }
+.modal-field { margin-bottom: 14px; }
+.modal-field label { display: block; font-family: 'Titillium Web', sans-serif; font-size: 0.75em; color: var(--editor-label); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+.modal-field input {
+    width: 100%; padding: 8px 12px;
+    background: #141922; border: 1px solid var(--editor-border);
+    border-radius: 5px; color: #fff;
+    font-family: 'Titillium Web', sans-serif; font-size: 0.9em;
+    outline: none; transition: border-color 0.15s;
+}
+.modal-field input:focus { border-color: var(--primary-color); }
+.modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 16px; }
+.modal-btn {
+    padding: 7px 18px; border-radius: 5px; border: none;
+    cursor: pointer; font-family: 'Titillium Web', sans-serif; font-weight: 600; font-size: 0.85em;
+}
+.modal-btn.confirm { background: var(--primary-color); color: white; }
+.modal-btn.confirm:hover { background: #0052a3; }
+.modal-btn.cancel { background: #2a3548; color: var(--editor-text); }
+.modal-btn.cancel:hover { background: #3a4a5e; }
+
+/* Modal Export */
+#export-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+}
+#export-modal.open { display: flex; }
+.export-box {
+    background: #1e2d42;
+    border: 1px solid var(--editor-border);
+    border-radius: 10px;
+    padding: 24px;
+    width: 640px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.export-box h3 { color: #fff; font-family: 'Titillium Web', sans-serif; margin-bottom: 12px; }
+.export-box textarea {
+    flex: 1; min-height: 300px;
+    background: #141922; border: 1px solid var(--editor-border);
+    border-radius: 5px; color: #7db3e8;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.72em;
+    padding: 12px; outline: none; resize: vertical;
+    line-height: 1.5;
+}
+.export-box .modal-actions { margin-top: 12px; }
+
+/* Toast */
+#toast {
+    position: fixed;
+    bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: #1e2d42; color: #7db3e8;
+    border: 1px solid var(--editor-border);
+    padding: 10px 20px; border-radius: 20px;
+    font-family: 'Titillium Web', sans-serif; font-size: 0.85em;
+    z-index: 99999; transition: transform 0.3s ease; pointer-events: none;
+    white-space: nowrap;
+}
+#toast.show { transform: translateX(-50%) translateY(0); }
+
+/* Sidebar edit: li nella lista contatti */
+.contact-info li.eb { padding-right: 0; }
+.contact-info li.eb .eb-controls { right: -36px; top: 0; }
+
+/* Stile del download btn originale */
+.download-btn {
+    position: fixed; bottom: 30px; right: 30px;
+    background-color: var(--primary-color); color: white;
+    padding: 15px 25px; border-radius: 50px; text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.4);
+    transition: all 0.3s ease; display: flex; align-items: center; gap: 10px;
+    font-weight: 600; font-family: inherit; font-size: 1rem;
+    border: none; cursor: pointer; z-index: 1000;
+}
+.download-btn:hover { background-color: #0052a3; transform: translateY(-2px); }
+.download-btn svg { width: 24px; height: 24px; fill: white; }
+
+/* STAMPA - nasconde editor chrome */
+@media print {
+    @page { size: A4 portrait; margin: 10mm; }
+    #editor-toolbar, .cv-wrapper > .editor-hint, .eb-controls, .add-row,
+    .download-btn, #toast, #link-modal, #export-modal { display: none !important; }
+    body { padding-top: 0 !important; background: #fff !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; font-size: 0.93em; }
+    .cv-wrapper { margin: 0 !important; max-width: 100% !important; }
+    .container { display: flex !important; flex-direction: row !important; align-items: flex-start !important; box-shadow: none !important; margin: 0 !important; max-width: 100% !important; width: 100% !important; }
+    .sidebar { width: 35% !important; background-color: #f9f9f9 !important; border-right: 1px solid var(--border-color) !important; padding: 20px !important; order: 0 !important; }
+    .main-content { width: 65% !important; padding: 20px 25px !important; order: 1 !important; }
+    .section { margin-bottom: 20px !important; }
+    a { text-decoration: none !important; color: var(--dark-color) !important; }
+    h2, h3, .main-content h2 { page-break-after: avoid !important; break-after: avoid !important; margin-bottom: 10px !important; }
+    .job p:first-of-type, .education-item p:first-of-type, .project p:first-of-type { page-break-after: avoid !important; break-after: avoid !important; }
+    .education-item, .project, .badge-container, .contact-info, .skills, .languages, .qr-code { page-break-inside: avoid !important; break-inside: avoid !important; display: inline-block !important; width: 100% !important; vertical-align: top; }
+    .job { display: block !important; page-break-inside: auto !important; break-inside: auto !important; margin-bottom: 15px !important; }
+    .job li { page-break-inside: avoid !important; break-inside: avoid !important; }
+    .tag { border: 1px solid #ccc !important; }
+    [contenteditable]:hover, [contenteditable]:focus { background: transparent !important; box-shadow: none !important; }
+    .eb::after { display: none !important; }
+}
+
+@media screen and (max-width: 768px) {
+    .container { flex-direction: column; }
+    .sidebar, .main-content { width: 100%; border-right: none; }
+    .main-content { order: 1; }
+    .sidebar { order: 2; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== TOOLBAR ===================== -->
+<div id="editor-toolbar">
+    <div class="tb-logo">CV<span> Editor</span></div>
+
+    <div class="tb-group">
+        <span class="tb-label">Struttura</span>
+        <button class="tb-btn" onclick="addSection()" title="Nuova sezione nella colonna principale">
+            <span class="ico">⊞</span> Sezione
+        </button>
+        <button class="tb-btn" onclick="addSidebarSection()" title="Nuova sezione nella sidebar">
+            <span class="ico">◧</span> Sezione Sidebar
+        </button>
+    </div>
+
+    <div class="tb-group">
+        <span class="tb-label">Blocchi</span>
+        <button class="tb-btn" onclick="addJob()" title="Aggiunge un'esperienza lavorativa">
+            <span class="ico">💼</span> Esperienza
+        </button>
+        <button class="tb-btn" onclick="addEducation()" title="Aggiunge un titolo di studio">
+            <span class="ico">🎓</span> Istruzione
+        </button>
+        <button class="tb-btn" onclick="addProject()" title="Aggiunge un progetto">
+            <span class="ico">🚀</span> Progetto
+        </button>
+        <button class="tb-btn" onclick="addCourse()" title="Aggiunge un corso di formazione">
+            <span class="ico">📚</span> Corso
+        </button>
+        <button class="tb-btn" onclick="addPublication()" title="Aggiunge una pubblicazione">
+            <span class="ico">📄</span> Pubblicazione
+        </button>
+        <button class="tb-btn" onclick="addBadge()" title="Aggiunge un open badge">
+            <span class="ico">🏅</span> Badge
+        </button>
+    </div>
+
+    <div class="tb-group">
+        <span class="tb-label">Elementi</span>
+        <button class="tb-btn" onclick="addBulletList()" title="Aggiunge un elenco puntato nell'ultima sezione attiva">
+            <span class="ico">≡</span> Elenco Puntato
+        </button>
+        <button class="tb-btn" onclick="addListItem()" title="Aggiunge una voce all'elenco attivo">
+            <span class="ico">•</span> Voce Lista
+        </button>
+        <button class="tb-btn" onclick="addParagraph()" title="Aggiunge un paragrafo di testo">
+            <span class="ico">¶</span> Testo
+        </button>
+        <button class="tb-btn" onclick="addTag()" title="Aggiunge un tag grigio">
+            <span class="ico">⌗</span> Tag Grigio
+        </button>
+        <button class="tb-btn" onclick="openLinkModal(null)" title="Aggiunge un link blu">
+            <span class="ico">⎘</span> Link Blu
+        </button>
+    </div>
+
+    <div class="tb-group">
+        <span class="tb-label">Sidebar</span>
+        <button class="tb-btn" onclick="addContact()" title="Aggiunge un contatto">
+            <span class="ico">📞</span> Contatto
+        </button>
+        <button class="tb-btn" onclick="addSkill()" title="Aggiunge una competenza">
+            <span class="ico">⚡</span> Competenza
+        </button>
+        <button class="tb-btn" onclick="addLanguage()" title="Aggiunge una lingua">
+            <span class="ico">🌐</span> Lingua
+        </button>
+    </div>
+
+    <div class="tb-group">
+        <button class="tb-btn success" onclick="exportHTML()" title="Esporta il CV come file HTML pulito">
+            <span class="ico">⬇</span> Esporta HTML
+        </button>
+        <button class="tb-btn primary" onclick="window.print()" title="Stampa o salva come PDF">
+            <span class="ico">🖨</span> Stampa PDF
+        </button>
+    </div>
+</div>
+
+<!-- ===================== CONTENUTO CV ===================== -->
+<div class="cv-wrapper">
+    <div class="editor-hint">
+        <div class="dot"></div>
+        Modalità Editor attiva — <strong>Clicca su qualsiasi testo</strong> per modificarlo · Passa il cursore su un blocco per spostarlo o eliminarlo · Usa la toolbar per aggiungere nuovi elementi
+    </div>
+
+    <div class="container" id="cv-root">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+
+            <section class="contact-info" id="section-contacts">
+                <h2 contenteditable="true" spellcheck="false">Contatti</h2>
+                <ul id="contact-list">
+                    <li class="eb">
+                        <div class="eb-controls">
+                            <button class="eb-btn eb-up" onclick="moveUp(this.closest('li'))" title="Sposta su">▲</button>
+                            <button class="eb-btn eb-dn" onclick="moveDown(this.closest('li'))" title="Sposta giù">▼</button>
+                            <button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))" title="Elimina">✕</button>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width:18px;height:18px;margin-right:10px;fill:var(--primary-color);flex-shrink:0"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.02.74-.25 1.02l-2.2 2.2z"/></svg>
+                        <a href="tel:+393388195900" class="cv-link" ondblclick="openLinkModal(this)" contenteditable="false">+39 3388195900</a>
+                    </li>
+                    <li class="eb">
+                        <div class="eb-controls">
+                            <button class="eb-btn eb-up" onclick="moveUp(this.closest('li'))" title="Sposta su">▲</button>
+                            <button class="eb-btn eb-dn" onclick="moveDown(this.closest('li'))" title="Sposta giù">▼</button>
+                            <button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))" title="Elimina">✕</button>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width:18px;height:18px;margin-right:10px;fill:var(--primary-color);flex-shrink:0"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                        <a href="mailto:davide.spatola@onexus.it" class="cv-link" ondblclick="openLinkModal(this)" contenteditable="false">davide.spatola@onexus.it</a>
+                    </li>
+                    <li class="eb">
+                        <div class="eb-controls">
+                            <button class="eb-btn eb-up" onclick="moveUp(this.closest('li'))" title="Sposta su">▲</button>
+                            <button class="eb-btn eb-dn" onclick="moveDown(this.closest('li'))" title="Sposta giù">▼</button>
+                            <button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))" title="Elimina">✕</button>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width:18px;height:18px;margin-right:10px;fill:var(--primary-color);flex-shrink:0"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                        <a href="mailto:davide.spatola0@pec.it" class="cv-link" ondblclick="openLinkModal(this)" contenteditable="false">davide.spatola0@pec.it</a>
+                    </li>
+                    <li class="eb">
+                        <div class="eb-controls">
+                            <button class="eb-btn eb-up" onclick="moveUp(this.closest('li'))" title="Sposta su">▲</button>
+                            <button class="eb-btn eb-dn" onclick="moveDown(this.closest('li'))" title="Sposta giù">▼</button>
+                            <button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))" title="Elimina">✕</button>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width:18px;height:18px;margin-right:10px;fill:var(--primary-color);flex-shrink:0"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-7 2h-2v2H8v2h2v2h2v-2h2v-2h-2V5M7 15h2v2H7v-2m4 0h2v2h-2v-2m4 0h2v2h-2v-2z"/></svg>
+                        <a href="https://www.linkedin.com/in/davide-spatola-169524204/" target="_blank" class="cv-link" ondblclick="openLinkModal(this)" contenteditable="false">Linkedin</a>
+                    </li>
+                    <li class="eb">
+                        <div class="eb-controls">
+                            <button class="eb-btn eb-up" onclick="moveUp(this.closest('li'))" title="Sposta su">▲</button>
+                            <button class="eb-btn eb-dn" onclick="moveDown(this.closest('li'))" title="Sposta giù">▼</button>
+                            <button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))" title="Elimina">✕</button>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width:18px;height:18px;margin-right:10px;fill:var(--primary-color);flex-shrink:0"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.6-4-1.6-.5-1.4-1.3-1.8-1.3-1.8-1-1 .1-1 .1-1 1.1.1 1.7 1.1 1.7 1.1.9 1.6 2.5 1.2 3.1.9.1-.7.4-1.2.7-1.4-2.4-.3-5-1.2-5-5.3 0-1.2.4-2.2 1.1-2.9-.1-.3-.5-1.4.1-2.9 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.5.2 2.6.1 2.9.7.7 1.1 1.7 1.1 2.9 0 4.1-2.6 5-5.1 5.3.4.3.8.9.8 1.8v2.6c0 .4.2.7.8.6A12 12 0 0 0 12 .3z"/></svg>
+                        <a href="https://www.onexus.it" target="_blank" class="cv-link" ondblclick="openLinkModal(this)" contenteditable="false">Sito Web - Progetti</a>
+                    </li>
+                </ul>
+                <div class="add-row"><button class="add-row-btn" onclick="addContact()">+ Aggiungi contatto</button></div>
+            </section>
+
+            <section class="skills" id="section-skills">
+                <h2 contenteditable="true" spellcheck="false">Competenze</h2>
+                <ul class="skills-list" id="skills-list">
+                    <li class="eb" contenteditable="true" spellcheck="false"><div class="eb-controls"><button class="eb-btn eb-up" onclick="moveUp(this.closest('li'))">▲</button><button class="eb-btn eb-dn" onclick="moveDown(this.closest('li'))">▼</button><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))">✕</button></div><strong>Linguaggi:</strong> C, Python, JavaScript, Java, SQL, Kotlin, Swift</li>
+                    <li class="eb" contenteditable="true" spellcheck="false"><div class="eb-controls"><button class="eb-btn eb-up" onclick="moveUp(this.closest('li'))">▲</button><button class="eb-btn eb-dn" onclick="moveDown(this.closest('li'))">▼</button><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))">✕</button></div><strong>Frontend:</strong> React, HTML5, CSS3</li>
+                    <li class="eb" contenteditable="true" spellcheck="false"><div class="eb-controls"><button class="eb-btn eb-up" onclick="moveUp(this.closest('li'))">▲</button><button class="eb-btn eb-dn" onclick="moveDown(this.closest('li'))">▼</button><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))">✕</button></div><strong>Backend:</strong> Node.js</li>
+                    <li class="eb" contenteditable="true" spellcheck="false"><div class="eb-controls"><button class="eb-btn eb-up" onclick="moveUp(this.closest('li'))">▲</button><button class="eb-btn eb-dn" onclick="moveDown(this.closest('li'))">▼</button><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))">✕</button></div><strong>Database:</strong> PostgreSQL, MongoDB, MariaDB, Firebase, SQLite, NoSQL</li>
+                    <li class="eb" contenteditable="true" spellcheck="false"><div class="eb-controls"><button class="eb-btn eb-up" onclick="moveUp(this.closest('li'))">▲</button><button class="eb-btn eb-dn" onclick="moveDown(this.closest('li'))">▼</button><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))">✕</button></div><strong>DevOps:</strong> Docker, Git</li>
+                    <li class="eb" contenteditable="true" spellcheck="false"><div class="eb-controls"><button class="eb-btn eb-up" onclick="moveUp(this.closest('li'))">▲</button><button class="eb-btn eb-dn" onclick="moveDown(this.closest('li'))">▼</button><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))">✕</button></div><strong>Metodologie:</strong> Visual Paradigm, Agile, Scrum</li>
+                </ul>
+                <div class="add-row"><button class="add-row-btn" onclick="addSkill()">+ Aggiungi competenza</button></div>
+            </section>
+
+            <section class="languages" id="section-languages">
+                <h2 contenteditable="true" spellcheck="false">Lingue</h2>
+                <ul class="languages-list" id="languages-list">
+                    <li class="eb" contenteditable="true" spellcheck="false"><div class="eb-controls"><button class="eb-btn eb-up" onclick="moveUp(this.closest('li'))">▲</button><button class="eb-btn eb-dn" onclick="moveDown(this.closest('li'))">▼</button><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))">✕</button></div><strong>Italiano:</strong> Madrelingua</li>
+                    <li class="eb" contenteditable="true" spellcheck="false"><div class="eb-controls"><button class="eb-btn eb-up" onclick="moveUp(this.closest('li'))">▲</button><button class="eb-btn eb-dn" onclick="moveDown(this.closest('li'))">▼</button><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))">✕</button></div><strong>Inglese:</strong> Livello: B2</li>
+                </ul>
+                <div class="add-row"><button class="add-row-btn" onclick="addLanguage()">+ Aggiungi lingua</button></div>
+            </section>
+
+            <div class="qr-code">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.onexus.it/curriculum.html" alt="QR Code">
+                <p contenteditable="true" spellcheck="false">Scansionami per visitare i progetti<br><a href="https://www.onexus.it" target="_blank" class="cv-link" ondblclick="openLinkModal(this)" contenteditable="false">o clicca qui</a></p>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content" id="main-content">
+
+            <header class="header">
+                <h1 contenteditable="true" spellcheck="false">Davide Spatola</h1>
+                <h3 contenteditable="true" spellcheck="false">Funzionario Tecnico | Responsabile Dei Sistemi Informativi | Sviluppatore</h3>
+            </header>
+
+            <!-- PROFILO -->
+            <section class="section profile eb" data-section-type="profile" id="section-profile">
+                <div class="eb-controls">
+                    <button class="eb-btn eb-up" onclick="moveUp(this.closest('.section'))">▲</button>
+                    <button class="eb-btn eb-dn" onclick="moveDown(this.closest('.section'))">▼</button>
+                    <button class="eb-btn eb-del" onclick="deleteBlock(this.closest('.section'))">✕</button>
+                </div>
+                <h2 contenteditable="true" spellcheck="false">Profilo Professionale</h2>
+                <p contenteditable="true" spellcheck="false" data-block="true">Gestione dei bandi e dei progetti PNRR. Sviluppatore software con esperienza nella progettazione e implementazione di applicazioni web. Specializzato in applicazioni mobili, con competenze in C e Java. Supporter di software opensource e di metodologie agili.</p>
+            </section>
+
+            <!-- ESPERIENZA -->
+            <section class="section experience eb" data-section-type="experience" id="section-experience">
+                <div class="eb-controls">
+                    <button class="eb-btn eb-up" onclick="moveUp(this.closest('.section'))">▲</button>
+                    <button class="eb-btn eb-dn" onclick="moveDown(this.closest('.section'))">▼</button>
+                    <button class="eb-btn eb-del" onclick="deleteBlock(this.closest('.section'))">✕</button>
+                </div>
+                <h2 contenteditable="true" spellcheck="false">Esperienza Lavorativa</h2>
+
+                <div class="job eb" data-type="job">
+                    <div class="eb-controls">
+                        <button class="eb-btn eb-up" onclick="moveUp(this.closest('.job'))">▲</button>
+                        <button class="eb-btn eb-dn" onclick="moveDown(this.closest('.job'))">▼</button>
+                        <button class="eb-btn eb-dup" onclick="duplicateBlock(this.closest('.job'))">⧉</button>
+                        <button class="eb-btn eb-del" onclick="deleteBlock(this.closest('.job'))">✕</button>
+                    </div>
+                    <p><span class="job-title" contenteditable="true" spellcheck="false">Responsabile dei Sistemi Informativi</span> | <span class="company" contenteditable="true" spellcheck="false">Milano, Bollate.</span></p>
+                    <p class="date" contenteditable="true" spellcheck="false" data-block="true">Dicembre 2024 - In Corso | Presenza | Bollate, Italia</p>
+                    <ul class="job-description">
+                        <li class="eb" contenteditable="true" spellcheck="false"><div class="eb-controls"><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))">✕</button></div>Attuazione e completamento dei bandi PNRR</li>
+                        <li class="eb" contenteditable="true" spellcheck="false"><div class="eb-controls"><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))">✕</button></div>Gestione del team dei Sistemi Informativi</li>
+                        <li class="eb" contenteditable="true" spellcheck="false"><div class="eb-controls"><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))">✕</button></div>Monitoraggio e aggiornamento dell'infrastruttura presente (Gestione delle utenze, VPN, Rete, Autenticazione, Permessi, Backup, System recovery, Conservazione digitale, Cloud)</li>
+                        <li class="eb" contenteditable="true" spellcheck="false"><div class="eb-controls"><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))">✕</button></div>Contributo alle riunioni tra i vari uffici dell'ente</li>
+                        <li class="eb" contenteditable="true" spellcheck="false"><div class="eb-controls"><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))">✕</button></div>Riunioni con esponenti di PADigitale per la gestione ed il report delle criticità riscontrate negli ultimi anni in temi di cybersecurity e tecniche lock-in less</li>
+                        <li class="eb" contenteditable="true" spellcheck="false"><div class="eb-controls"><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))">✕</button></div>Confronto e contatto con responsabili e dirigenti degli enti presenti nella rete di Città Metropolitana di Milano</li>
+                        <li class="eb" contenteditable="true" spellcheck="false"><div class="eb-controls"><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))">✕</button></div>Sviluppo di competenze di problem solving on the job dei guasti pervenuti all'infrastruttura</li>
+                        <li class="eb" contenteditable="true" spellcheck="false"><div class="eb-controls"><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))">✕</button></div>Capacità decisionale nei momenti di emergenza</li>
+                        <li class="eb" contenteditable="true" spellcheck="false"><div class="eb-controls"><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))">✕</button></div>Valutazione delle proposte di offerta da parte delle aziende private nei bandi di gara</li>
+                        <li class="eb" contenteditable="true" spellcheck="false"><div class="eb-controls"><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))">✕</button></div>Principali competenze sviluppate: Tecnico-amministrativa</li>
+                    </ul>
+                </div>
+
+                <div class="job eb" data-type="job">
+                    <div class="eb-controls">
+                        <button class="eb-btn eb-up" onclick="moveUp(this.closest('.job'))">▲</button>
+                        <button class="eb-btn eb-dn" onclick="moveDown(this.closest('.job'))">▼</button>
+                        <button class="eb-btn eb-dup" onclick="duplicateBlock(this.closest('.job'))">⧉</button>
+                        <button class="eb-btn eb-del" onclick="deleteBlock(this.closest('.job'))">✕</button>
+                    </div>
+                    <p><span class="job-title" contenteditable="true" spellcheck="false">Junior Consultant</span> | <span class="company" contenteditable="true" spellcheck="false">Università del Piemonte Orientale</span></p>
+                    <p class="date" contenteditable="true" spellcheck="false" data-block="true">Gennaio 2024 - Maggio 2024 - Ibrido | Alessandria, Italia</p>
+                    <ul class="job-description">
+                        <li class="eb" contenteditable="true" spellcheck="false"><div class="eb-controls"><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))">✕</button></div>Progettazione e sviluppo del backend e del frontend per un applicazione medica.</li>
+                        <li class="eb" contenteditable="true" spellcheck="false"><div class="eb-controls"><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))">✕</button></div>Ottimizzazione e refactoring del codice iniziale di base.</li>
+                        <li class="eb" contenteditable="true" spellcheck="false"><div class="eb-controls"><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))">✕</button></div>Implementazione di nuovi moduli e funzionalità nella nativa applicazione.</li>
+                        <li class="eb" contenteditable="true" spellcheck="false"><div class="eb-controls"><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))">✕</button></div>Collaborazione con il team di medici.</li>
+                        <li class="eb" contenteditable="true" spellcheck="false"><div class="eb-controls"><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))">✕</button></div>L'applicazione monitora le operazioni effettuate dai medici durante le fasi di rianimazione neonatale, con valutazione tramite AI. Utilizzo di Java, Kotlin, SQL.</li>
+                    </ul>
+                </div>
+
+                <div class="add-row"><button class="add-row-btn" onclick="addJob()">+ Aggiungi esperienza</button></div>
+            </section>
+
+            <!-- ISTRUZIONE -->
+            <section class="section education eb" data-section-type="education" id="section-education">
+                <div class="eb-controls">
+                    <button class="eb-btn eb-up" onclick="moveUp(this.closest('.section'))">▲</button>
+                    <button class="eb-btn eb-dn" onclick="moveDown(this.closest('.section'))">▼</button>
+                    <button class="eb-btn eb-del" onclick="deleteBlock(this.closest('.section'))">✕</button>
+                </div>
+                <h2 contenteditable="true" spellcheck="false">Istruzione</h2>
+
+                <div class="education-item eb" data-type="education">
+                    <div class="eb-controls">
+                        <button class="eb-btn eb-up" onclick="moveUp(this.closest('.education-item'))">▲</button>
+                        <button class="eb-btn eb-dn" onclick="moveDown(this.closest('.education-item'))">▼</button>
+                        <button class="eb-btn eb-dup" onclick="duplicateBlock(this.closest('.education-item'))">⧉</button>
+                        <button class="eb-btn eb-del" onclick="deleteBlock(this.closest('.education-item'))">✕</button>
+                    </div>
+                    <p><span class="degree" contenteditable="true" spellcheck="false">LM18 - Laurea Magistrale in Intelligenza Artificiale</span></p>
+                    <p class="education-institution" contenteditable="true" spellcheck="false" data-block="true">Università del Piemonte Orientale</p>
+                    <p class="date" contenteditable="true" spellcheck="false" data-block="true">2024 - In corso</p>
+                </div>
+
+                <div class="education-item eb" data-type="education">
+                    <div class="eb-controls">
+                        <button class="eb-btn eb-up" onclick="moveUp(this.closest('.education-item'))">▲</button>
+                        <button class="eb-btn eb-dn" onclick="moveDown(this.closest('.education-item'))">▼</button>
+                        <button class="eb-btn eb-dup" onclick="duplicateBlock(this.closest('.education-item'))">⧉</button>
+                        <button class="eb-btn eb-del" onclick="deleteBlock(this.closest('.education-item'))">✕</button>
+                    </div>
+                    <p><span class="degree" contenteditable="true" spellcheck="false">L31 - Laurea in Scienze e Tecnologie Informatiche</span></p>
+                    <p class="education-institution" contenteditable="true" spellcheck="false" data-block="true">Università del Piemonte Orientale</p>
+                    <p class="date" contenteditable="true" spellcheck="false" data-block="true">2019 - 2024</p>
+                </div>
+
+                <div class="education-item eb" data-type="education">
+                    <div class="eb-controls">
+                        <button class="eb-btn eb-up" onclick="moveUp(this.closest('.education-item'))">▲</button>
+                        <button class="eb-btn eb-dn" onclick="moveDown(this.closest('.education-item'))">▼</button>
+                        <button class="eb-btn eb-dup" onclick="duplicateBlock(this.closest('.education-item'))">⧉</button>
+                        <button class="eb-btn eb-del" onclick="deleteBlock(this.closest('.education-item'))">✕</button>
+                    </div>
+                    <p><span class="degree" contenteditable="true" spellcheck="false">Liceo Scientifico Tecnologico Scienze Applicate</span></p>
+                    <p class="education-institution" contenteditable="true" spellcheck="false" data-block="true">G. Curcio</p>
+                    <p class="date" contenteditable="true" spellcheck="false" data-block="true">2014 - 2019</p>
+                </div>
+
+                <div class="add-row"><button class="add-row-btn" onclick="addEducation()">+ Aggiungi istruzione</button></div>
+            </section>
+
+            <!-- PROGETTI -->
+            <section class="section projects eb" data-section-type="projects" id="section-projects">
+                <div class="eb-controls">
+                    <button class="eb-btn eb-up" onclick="moveUp(this.closest('.section'))">▲</button>
+                    <button class="eb-btn eb-dn" onclick="moveDown(this.closest('.section'))">▼</button>
+                    <button class="eb-btn eb-del" onclick="deleteBlock(this.closest('.section'))">✕</button>
+                </div>
+                <h2 contenteditable="true" spellcheck="false">Progetti Personali</h2>
+
+                <div class="project eb" data-type="project">
+                    <div class="eb-controls">
+                        <button class="eb-btn eb-up" onclick="moveUp(this.closest('.project'))">▲</button>
+                        <button class="eb-btn eb-dn" onclick="moveDown(this.closest('.project'))">▼</button>
+                        <button class="eb-btn eb-dup" onclick="duplicateBlock(this.closest('.project'))">⧉</button>
+                        <button class="eb-btn eb-del" onclick="deleteBlock(this.closest('.project'))">✕</button>
+                    </div>
+                    <p><span class="project-title" contenteditable="true" spellcheck="false">Web App - App e-commerce</span></p>
+                    <ul class="tech-tags" style="list-style:none;padding:0">
+                        <li class="eb" contenteditable="true" spellcheck="false"><div class="eb-controls"><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))">✕</button></div>Principali Progetti al link del sito web nella sezione servizi.</li>
+                        <li class="eb"><div class="eb-controls"><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))">✕</button></div><a href="https://www.onexus.it" target="_blank" class="cv-link" ondblclick="openLinkModal(this)" contenteditable="false">Sito Web - Progetti</a></li>
+                    </ul>
+                    <div class="tech-tags">
+                        <span class="tag eb" contenteditable="true" spellcheck="false"><div class="eb-controls" style="top:-2px;right:-32px"><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('.tag'))" style="width:20px;height:20px;font-size:10px">✕</button></div>Firebase</span>
+                        <span class="tag eb" contenteditable="true" spellcheck="false"><div class="eb-controls" style="top:-2px;right:-32px"><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('.tag'))" style="width:20px;height:20px;font-size:10px">✕</button></div>Java</span>
+                    </div>
+                </div>
+
+                <div class="add-row"><button class="add-row-btn" onclick="addProject()">+ Aggiungi progetto</button></div>
+            </section>
+
+            <!-- PUBBLICAZIONI & CORSI -->
+            <section class="section certifications eb" data-section-type="certifications" id="section-certifications">
+                <div class="eb-controls">
+                    <button class="eb-btn eb-up" onclick="moveUp(this.closest('.section'))">▲</button>
+                    <button class="eb-btn eb-dn" onclick="moveDown(this.closest('.section'))">▼</button>
+                    <button class="eb-btn eb-del" onclick="deleteBlock(this.closest('.section'))">✕</button>
+                </div>
+                <h2 contenteditable="true" spellcheck="false">Pubblicazioni Scientifiche</h2>
+
+                <div class="education-item eb" data-type="publication">
+                    <div class="eb-controls">
+                        <button class="eb-btn eb-up" onclick="moveUp(this.closest('.education-item'))">▲</button>
+                        <button class="eb-btn eb-dn" onclick="moveDown(this.closest('.education-item'))">▼</button>
+                        <button class="eb-btn eb-dup" onclick="duplicateBlock(this.closest('.education-item'))">⧉</button>
+                        <button class="eb-btn eb-del" onclick="deleteBlock(this.closest('.education-item'))">✕</button>
+                    </div>
+                    <p><span class="degree" contenteditable="true" spellcheck="false">Comprehensive Neonatal Resuscitation Course: Integrating High-Fidelity Simulation and Novapp for Enhanced Performance Evaluation</span></p>
+                    <p contenteditable="true" spellcheck="false" data-block="true">Livello: Internazionale</p>
+                    <p class="education-institution" contenteditable="true" spellcheck="false" data-block="true">Nome Rivista/Volume:</p>
+                    <p contenteditable="true" spellcheck="false" data-block="true">23rd International Conference of the Italian Association for Artificial Intelligence / 3902</p>
+                    <p contenteditable="true" spellcheck="false" data-block="true">N. di pagine: 8 | Tipo Autore: Espositore</p>
+                    <p><a href="https://www.researchgate.net/publication/388185093_Comprehensive_Neonatal_Resuscitation_Course_Integrating_High-Fidelity_Simulation_and_Novapp_for_Enhanced_Performance_Evaluation" target="_blank" class="cv-link" ondblclick="openLinkModal(this)" contenteditable="false">Link Researchgate</a></p>
+                    <p class="date" contenteditable="true" spellcheck="false" data-block="true">Data di pubblicazione: January 2025</p>
+                </div>
+
+                <h2 contenteditable="true" spellcheck="false" style="margin-top:20px">Corsi di formazione</h2>
+
+                <div class="education-item eb" data-type="course">
+                    <div class="eb-controls">
+                        <button class="eb-btn eb-up" onclick="moveUp(this.closest('.education-item'))">▲</button>
+                        <button class="eb-btn eb-dn" onclick="moveDown(this.closest('.education-item'))">▼</button>
+                        <button class="eb-btn eb-dup" onclick="duplicateBlock(this.closest('.education-item'))">⧉</button>
+                        <button class="eb-btn eb-del" onclick="deleteBlock(this.closest('.education-item'))">✕</button>
+                    </div>
+                    <p><span class="degree" contenteditable="true" spellcheck="false">Università Cattolica — Percorso formativo per Dirigenti e Funzionari del Comune di Bollate e San Donato Milanese</span></p>
+                    <p contenteditable="true" spellcheck="false" data-block="true">Data Inizio: 21/10/2025 | Data Fine: In corso</p>
+                    <p contenteditable="true" spellcheck="false" data-block="true">Ente Organizzatore: Università Cattolica | Indirizzo: Bollate</p>
+                    <p contenteditable="true" spellcheck="false" data-block="true">Tipologia: Corso di formazione obbligatoria | Durata in ore: 40</p>
+                </div>
+
+                <div class="education-item eb" data-type="course">
+                    <div class="eb-controls">
+                        <button class="eb-btn eb-up" onclick="moveUp(this.closest('.education-item'))">▲</button>
+                        <button class="eb-btn eb-dn" onclick="moveDown(this.closest('.education-item'))">▼</button>
+                        <button class="eb-btn eb-dup" onclick="duplicateBlock(this.closest('.education-item'))">⧉</button>
+                        <button class="eb-btn eb-del" onclick="deleteBlock(this.closest('.education-item'))">✕</button>
+                    </div>
+                    <p><span class="degree" contenteditable="true" spellcheck="false">Amministrazione e struttura degli enti locali ed informatica giuridica</span></p>
+                    <p contenteditable="true" spellcheck="false" data-block="true">Data Inizio: 17/03/2025 | Data Fine: 17/09/2025</p>
+                    <p contenteditable="true" spellcheck="false" data-block="true">Ente Organizzatore: Omniavis | Indirizzo: Bollate</p>
+                    <p contenteditable="true" spellcheck="false" data-block="true">Tipologia: Corso di formazione obbligatoria | Durata in ore: 40</p>
+                </div>
+
+                <div class="education-item eb" data-type="course">
+                    <div class="eb-controls">
+                        <button class="eb-btn eb-up" onclick="moveUp(this.closest('.education-item'))">▲</button>
+                        <button class="eb-btn eb-dn" onclick="moveDown(this.closest('.education-item'))">▼</button>
+                        <button class="eb-btn eb-dup" onclick="duplicateBlock(this.closest('.education-item'))">⧉</button>
+                        <button class="eb-btn eb-del" onclick="deleteBlock(this.closest('.education-item'))">✕</button>
+                    </div>
+                    <p><span class="degree" contenteditable="true" spellcheck="false">Smart city: dove innovazione e sostenibilità si incontrano</span></p>
+                    <p contenteditable="true" spellcheck="false" data-block="true">Data Inizio e fine: 07/05/2025</p>
+                    <p contenteditable="true" spellcheck="false" data-block="true">Ente Organizzatore: Politecnico di Milano | Indirizzo: Via Giovanni Durando 10</p>
+                    <p contenteditable="true" spellcheck="false" data-block="true">Tipologia: Congresso/convegno | Durata in ore: 3</p>
+                    <p contenteditable="true" spellcheck="false" data-block="true">Competenze maturate: Aggiornamento procedure, approfondimento AI e gemello digitale</p>
+                </div>
+
+                <div class="education-item eb" data-type="course">
+                    <div class="eb-controls">
+                        <button class="eb-btn eb-up" onclick="moveUp(this.closest('.education-item'))">▲</button>
+                        <button class="eb-btn eb-dn" onclick="moveDown(this.closest('.education-item'))">▼</button>
+                        <button class="eb-btn eb-dup" onclick="duplicateBlock(this.closest('.education-item'))">⧉</button>
+                        <button class="eb-btn eb-del" onclick="deleteBlock(this.closest('.education-item'))">✕</button>
+                    </div>
+                    <p><span class="degree" contenteditable="true" spellcheck="false">Corso Anti Corruzione</span></p>
+                    <p contenteditable="true" spellcheck="false" data-block="true">Ente Organizzatore: Comune di Bollate</p>
+                    <p style="margin-top:10px"><span class="degree" contenteditable="true" spellcheck="false">Corso Sulla Privacy</span></p>
+                    <p contenteditable="true" spellcheck="false" data-block="true">Ente Organizzatore: Comune di Bollate</p>
+                </div>
+
+                <!-- OPEN BADGE -->
+                <div class="badge-container">
+                    <h2 contenteditable="true" spellcheck="false">Open Badge</h2>
+                    <div class="badge-grid" id="badge-grid">
+                        <div class="badge eb" data-type="badge">
+                            <div class="eb-controls"><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('.badge'))">✕</button></div>
+                            <p contenteditable="true" spellcheck="false">Adottare l'intelligenza artificiale nella PA</p>
+                            <img src="AIBadge.png" alt="AI Badge" onerror="this.style.background='#eee';this.style.width='100px';this.style.height='100px'">
+                            <a href="https://openbadges.bestr.it/public/assertions/8YAG9HkiS-64Xd5BoM89ww" target="_blank" class="cv-link" ondblclick="openLinkModal(this)" contenteditable="false">Vai</a>
+                        </div>
+                        <div class="badge eb" data-type="badge">
+                            <div class="eb-controls"><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('.badge'))">✕</button></div>
+                            <p contenteditable="true" spellcheck="false">Gestire dati informazioni e contenuti digitali</p>
+                            <img src="Dati.png" alt="Dati Badge" onerror="this.style.background='#eee';this.style.width='100px';this.style.height='100px'">
+                            <a href="https://openbadges.bestr.it/public/assertions/Ykb3f7J1R3CTu36yxXTkRQ" target="_blank" class="cv-link" ondblclick="openLinkModal(this)" contenteditable="false">Vai</a>
+                        </div>
+                        <div class="badge eb" data-type="badge">
+                            <div class="eb-controls"><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('.badge'))">✕</button></div>
+                            <p contenteditable="true" spellcheck="false">Produrre valutare e gestire documenti informatici</p>
+                            <img src="DocumentiInformatici.png" alt="Documenti Badge" onerror="this.style.background='#eee';this.style.width='100px';this.style.height='100px'">
+                            <a href="https://openbadges.bestr.it/public/assertions/ERePz-iCT_CCDVINT6z01g" target="_blank" class="cv-link" ondblclick="openLinkModal(this)" contenteditable="false">Vai</a>
+                        </div>
+                    </div>
+                    <div class="add-row" style="opacity:1;padding:10px 0 0"><button class="add-row-btn" onclick="addBadge()">+ Aggiungi badge</button></div>
+                </div>
+
+                <div class="add-row"><button class="add-row-btn" onclick="addCourse()">+ Aggiungi corso</button></div>
+            </section>
+
+        </main>
+    </div>
+</div>
+
+<!-- Bottone PDF (nascosto in editor, visibile solo in stampa) -->
+<button onclick="window.print()" class="download-btn" style="display:none" id="print-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8.5 7.5c0 .83-.67 1.5-1.5 1.5H9v2H7.5V7H10c.83 0 1.5.67 1.5 1.5v1zm5 2c0 .83-.67 1.5-1.5 1.5h-2.5V7H15c.83 0 1.5.67 1.5 1.5v3zm4-3H19v1h1.5V11H19v2h-1.5V7h3v1.5zM9 9.5h1v-1H9v1zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm10 5.5h1v-3h-1v3z"/></svg>
+    Scarica CV PDF
+</button>
+
+<!-- MODAL LINK -->
+<div id="link-modal">
+    <div class="modal-box">
+        <h3>✎ Modifica Link</h3>
+        <div class="modal-field">
+            <label>Testo del link</label>
+            <input type="text" id="link-text-input" placeholder="es. Visita il sito">
+        </div>
+        <div class="modal-field">
+            <label>URL</label>
+            <input type="url" id="link-href-input" placeholder="https://...">
+        </div>
+        <div class="modal-actions">
+            <button class="modal-btn cancel" onclick="closeLinkModal()">Annulla</button>
+            <button class="modal-btn confirm" onclick="confirmLink()">Conferma</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL EXPORT -->
+<div id="export-modal">
+    <div class="export-box">
+        <h3>⬇ Esporta HTML</h3>
+        <p style="color:#6a8099;font-family:'Titillium Web',sans-serif;font-size:0.8em;margin-bottom:10px">HTML pulito del tuo CV, pronto per essere salvato come file .html</p>
+        <textarea id="export-textarea" readonly></textarea>
+        <div class="modal-actions">
+            <button class="modal-btn cancel" onclick="closeExportModal()">Chiudi</button>
+            <button class="modal-btn confirm" onclick="copyExport()">📋 Copia tutto</button>
+            <button class="modal-btn confirm" style="background:#27ae60" onclick="downloadHTML()">⬇ Scarica .html</button>
+        </div>
+    </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script>
+// ============================================================
+//  UTILITIES
+// ============================================================
+let currentLinkEl = null;
+let currentLinkTarget = null; // 'insert' or 'edit'
+
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+function makeEditable(el) {
+    el.setAttribute('contenteditable', 'true');
+    el.setAttribute('spellcheck', 'false');
+}
+
+// ============================================================
+//  BLOCK CONTROLS
+// ============================================================
+function deleteBlock(el) {
+    if (confirm('Eliminare questo elemento?')) {
+        el.remove();
+        showToast('Elemento eliminato');
+    }
+}
+
+function moveUp(el) {
+    const prev = el.previousElementSibling;
+    if (prev && !prev.classList.contains('add-row') && !prev.tagName === 'H2') {
+        el.parentNode.insertBefore(el, prev);
+        showToast('Spostato su');
+    }
+}
+
+function moveDown(el) {
+    const next = el.nextElementSibling;
+    if (next && !next.classList.contains('add-row')) {
+        el.parentNode.insertBefore(next, el);
+        showToast('Spostato giù');
+    }
+}
+
+function duplicateBlock(el) {
+    const clone = el.cloneNode(true);
+    el.parentNode.insertBefore(clone, el.nextSibling);
+    showToast('Elemento duplicato');
+}
+
+// ============================================================
+//  TEMPLATES
+// ============================================================
+function ebControls(type) {
+    const isSection = type === 'section';
+    const extras = (!isSection) ? `<button class="eb-btn eb-dup" onclick="duplicateBlock(this.closest('[data-type]'))">⧉</button>` : '';
+    return `<div class="eb-controls">
+        <button class="eb-btn eb-up" onclick="moveUp(this.closest('.eb'))">▲</button>
+        <button class="eb-btn eb-dn" onclick="moveDown(this.closest('.eb'))">▼</button>
+        ${extras}
+        <button class="eb-btn eb-del" onclick="deleteBlock(this.closest('.eb'))">✕</button>
+    </div>`;
+}
+
+function liControls() {
+    return `<div class="eb-controls"><button class="eb-btn eb-up" onclick="moveUp(this.closest('li'))">▲</button><button class="eb-btn eb-dn" onclick="moveDown(this.closest('li'))">▼</button><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))">✕</button></div>`;
+}
+
+function liControlsSimple() {
+    return `<div class="eb-controls"><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))">✕</button></div>`;
+}
+
+// ============================================================
+//  ADD ELEMENTS — MAIN CONTENT
+// ============================================================
+function addJob() {
+    const container = document.getElementById('section-experience');
+    const addRow = container.querySelector('.add-row');
+    const html = `<div class="job eb" data-type="job">
+        ${ebControls('job')}
+        <p><span class="job-title" contenteditable="true" spellcheck="false">Titolo Posizione</span> | <span class="company" contenteditable="true" spellcheck="false">Azienda, Città.</span></p>
+        <p class="date" contenteditable="true" spellcheck="false" data-block="true">Mese Anno - Mese Anno | Tipologia | Città, Paese</p>
+        <ul class="job-description">
+            <li class="eb" contenteditable="true" spellcheck="false">${liControlsSimple()}Descrizione attività principale</li>
+            <li class="eb" contenteditable="true" spellcheck="false">${liControlsSimple()}Altra attività svolta</li>
+        </ul>
+    </div>`;
+    addRow.insertAdjacentHTML('beforebegin', html);
+    showToast('✓ Esperienza aggiunta');
+}
+
+function addEducation() {
+    const container = document.getElementById('section-education');
+    const addRow = container.querySelector('.add-row');
+    const html = `<div class="education-item eb" data-type="education">
+        ${ebControls('education')}
+        <p><span class="degree" contenteditable="true" spellcheck="false">Titolo del corso / laurea</span></p>
+        <p class="education-institution" contenteditable="true" spellcheck="false" data-block="true">Nome Istituzione</p>
+        <p class="date" contenteditable="true" spellcheck="false" data-block="true">Anno inizio - Anno fine</p>
+    </div>`;
+    addRow.insertAdjacentHTML('beforebegin', html);
+    showToast('✓ Istruzione aggiunta');
+}
+
+function addProject() {
+    const container = document.getElementById('section-projects');
+    const addRow = container.querySelector('.add-row');
+    const html = `<div class="project eb" data-type="project">
+        ${ebControls('project')}
+        <p><span class="project-title" contenteditable="true" spellcheck="false">Nome del Progetto</span></p>
+        <p contenteditable="true" spellcheck="false" data-block="true">Breve descrizione del progetto e tecnologie utilizzate.</p>
+        <div class="tech-tags">
+            <span class="tag eb" contenteditable="true" spellcheck="false"><div class="eb-controls" style="top:-2px;right:-32px"><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('.tag'))" style="width:20px;height:20px;font-size:10px">✕</button></div>Tecnologia</span>
+        </div>
+    </div>`;
+    addRow.insertAdjacentHTML('beforebegin', html);
+    showToast('✓ Progetto aggiunto');
+}
+
+function addCourse() {
+    const container = document.getElementById('section-certifications');
+    const addRow = container.querySelector('.add-row');
+    const html = `<div class="education-item eb" data-type="course">
+        ${ebControls('course')}
+        <p><span class="degree" contenteditable="true" spellcheck="false">Titolo del Corso</span></p>
+        <p contenteditable="true" spellcheck="false" data-block="true">Data Inizio: gg/mm/aaaa | Data Fine: gg/mm/aaaa</p>
+        <p contenteditable="true" spellcheck="false" data-block="true">Ente Organizzatore: Nome Ente | Indirizzo: Città</p>
+        <p contenteditable="true" spellcheck="false" data-block="true">Tipologia: Tipo corso | Durata in ore: N</p>
+    </div>`;
+    addRow.insertAdjacentHTML('beforebegin', html);
+    showToast('✓ Corso aggiunto');
+}
+
+function addPublication() {
+    const container = document.getElementById('section-certifications');
+    const h2nodes = container.querySelectorAll('h2');
+    const targetH2 = h2nodes[0];
+    const html = `<div class="education-item eb" data-type="publication">
+        ${ebControls('publication')}
+        <p><span class="degree" contenteditable="true" spellcheck="false">Titolo della Pubblicazione</span></p>
+        <p contenteditable="true" spellcheck="false" data-block="true">Livello: Nazionale / Internazionale</p>
+        <p class="education-institution" contenteditable="true" spellcheck="false" data-block="true">Nome Rivista / Conferenza</p>
+        <p contenteditable="true" spellcheck="false" data-block="true">N. di pagine: — | Tipo Autore: —</p>
+        <p class="date" contenteditable="true" spellcheck="false" data-block="true">Data di pubblicazione: mese anno</p>
+    </div>`;
+    if (targetH2) targetH2.insertAdjacentHTML('afterend', html);
+    showToast('✓ Pubblicazione aggiunta');
+}
+
+function addBadge() {
+    const grid = document.getElementById('badge-grid');
+    const html = `<div class="badge eb" data-type="badge">
+        <div class="eb-controls"><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('.badge'))">✕</button></div>
+        <p contenteditable="true" spellcheck="false">Nome del Badge</p>
+        <img src="" alt="Badge" style="background:#eee;width:100px;height:100px">
+        <a href="#" class="cv-link" ondblclick="openLinkModal(this)" contenteditable="false">Vai</a>
+    </div>`;
+    grid.insertAdjacentHTML('beforeend', html);
+    showToast('✓ Badge aggiunto');
+}
+
+function addSection() {
+    const main = document.getElementById('main-content');
+    const id = 'section-' + Date.now();
+    const html = `<section class="section eb" data-section-type="custom" id="${id}">
+        <div class="eb-controls">
+            <button class="eb-btn eb-up" onclick="moveUp(this.closest('.section'))">▲</button>
+            <button class="eb-btn eb-dn" onclick="moveDown(this.closest('.section'))">▼</button>
+            <button class="eb-btn eb-del" onclick="deleteBlock(this.closest('.section'))">✕</button>
+        </div>
+        <h2 contenteditable="true" spellcheck="false">Nuova Sezione</h2>
+        <p contenteditable="true" spellcheck="false" data-block="true">Inserisci qui il testo di questa sezione...</p>
+    </section>`;
+    main.insertAdjacentHTML('beforeend', html);
+    const newSection = document.getElementById(id);
+    newSection.querySelector('h2').focus();
+    showToast('✓ Sezione aggiunta');
+}
+
+function addSidebarSection() {
+    const sidebar = document.getElementById('sidebar');
+    const qr = sidebar.querySelector('.qr-code');
+    const html = `<section class="eb" style="margin-bottom:20px">
+        <div class="eb-controls">
+            <button class="eb-btn eb-up" onclick="moveUp(this.closest('section'))">▲</button>
+            <button class="eb-btn eb-dn" onclick="moveDown(this.closest('section'))">▼</button>
+            <button class="eb-btn eb-del" onclick="deleteBlock(this.closest('section'))">✕</button>
+        </div>
+        <h2 contenteditable="true" spellcheck="false">Nuova Sezione</h2>
+        <p contenteditable="true" spellcheck="false" data-block="true">Testo della sezione...</p>
+    </section>`;
+    if (qr) sidebar.insertBefore(createFragment(html), qr);
+    else sidebar.insertAdjacentHTML('beforeend', html);
+    showToast('✓ Sezione sidebar aggiunta');
+}
+
+function createFragment(html) {
+    const d = document.createElement('div');
+    d.innerHTML = html;
+    return d.firstElementChild;
+}
+
+// ============================================================
+//  ADD ELEMENTS — INLINE
+// ============================================================
+function addBulletList() {
+    const active = getActiveSectionOrLast();
+    if (!active) return;
+    const html = `<ul class="job-description">
+        <li class="eb" contenteditable="true" spellcheck="false">${liControlsSimple()}Voce dell'elenco</li>
+    </ul>`;
+    const addRow = active.querySelector('.add-row');
+    if (addRow) addRow.insertAdjacentHTML('beforebegin', html);
+    else active.insertAdjacentHTML('beforeend', html);
+    showToast('✓ Elenco puntato aggiunto');
+}
+
+function addListItem() {
+    const active = document.activeElement;
+    let ul = null;
+    if (active && active.closest('ul')) {
+        ul = active.closest('ul');
+    } else {
+        const section = getActiveSectionOrLast();
+        if (section) ul = section.querySelector('ul');
+    }
+    if (!ul) { showToast('⚠ Clicca prima su un elenco esistente'); return; }
+    const li = document.createElement('li');
+    li.className = 'eb';
+    li.setAttribute('contenteditable', 'true');
+    li.setAttribute('spellcheck', 'false');
+    li.innerHTML = liControlsSimple() + 'Nuova voce';
+    ul.appendChild(li);
+    li.focus();
+    showToast('✓ Voce aggiunta');
+}
+
+function addParagraph() {
+    const active = getActiveSectionOrLast();
+    if (!active) return;
+    const p = document.createElement('p');
+    p.setAttribute('contenteditable', 'true');
+    p.setAttribute('spellcheck', 'false');
+    p.setAttribute('data-block', 'true');
+    p.style.color = 'var(--text-color)';
+    p.textContent = 'Testo del paragrafo...';
+    const addRow = active.querySelector('.add-row');
+    if (addRow) addRow.insertAdjacentElement('beforebegin', p);
+    else active.insertAdjacentElement('beforeend', p);
+    p.focus();
+    showToast('✓ Paragrafo aggiunto');
+}
+
+function addTag() {
+    const active = document.activeElement;
+    let container = active && active.closest('.project') || active && active.closest('.section');
+    if (!container) container = getActiveSectionOrLast();
+    if (!container) return;
+    let tagsDiv = container.querySelector('.tech-tags:not(ul)');
+    if (!tagsDiv) {
+        tagsDiv = document.createElement('div');
+        tagsDiv.className = 'tech-tags';
+        const addRow = container.querySelector('.add-row');
+        if (addRow) addRow.insertAdjacentElement('beforebegin', tagsDiv);
+        else container.insertAdjacentElement('beforeend', tagsDiv);
+    }
+    const span = document.createElement('span');
+    span.className = 'tag eb';
+    span.setAttribute('contenteditable', 'true');
+    span.setAttribute('spellcheck', 'false');
+    span.innerHTML = `<div class="eb-controls" style="top:-2px;right:-32px"><button class="eb-btn eb-del" onclick="deleteBlock(this.closest('.tag'))" style="width:20px;height:20px;font-size:10px">✕</button></div>Tag`;
+    tagsDiv.appendChild(span);
+    span.focus();
+    showToast('✓ Tag aggiunto');
+}
+
+// ============================================================
+//  ADD ELEMENTS — SIDEBAR
+// ============================================================
+function addContact() {
+    const ul = document.getElementById('contact-list');
+    const li = document.createElement('li');
+    li.className = 'eb';
+    li.innerHTML = `<div class="eb-controls">
+        <button class="eb-btn eb-up" onclick="moveUp(this.closest('li'))">▲</button>
+        <button class="eb-btn eb-dn" onclick="moveDown(this.closest('li'))">▼</button>
+        <button class="eb-btn eb-del" onclick="deleteBlock(this.closest('li'))">✕</button>
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width:18px;height:18px;margin-right:10px;fill:var(--primary-color);flex-shrink:0"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+    <a href="#" class="cv-link" ondblclick="openLinkModal(this)" contenteditable="false">Nuovo Contatto</a>`;
+    ul.appendChild(li);
+    openLinkModal(li.querySelector('a'));
+    showToast('✓ Contatto aggiunto');
+}
+
+function addSkill() {
+    const ul = document.getElementById('skills-list');
+    const li = document.createElement('li');
+    li.className = 'eb';
+    li.setAttribute('contenteditable', 'true');
+    li.setAttribute('spellcheck', 'false');
+    li.innerHTML = `${liControls()}<strong>Categoria:</strong> competenza1, competenza2`;
+    ul.appendChild(li);
+    li.focus();
+    showToast('✓ Competenza aggiunta');
+}
+
+function addLanguage() {
+    const ul = document.getElementById('languages-list');
+    const li = document.createElement('li');
+    li.className = 'eb';
+    li.setAttribute('contenteditable', 'true');
+    li.setAttribute('spellcheck', 'false');
+    li.innerHTML = `${liControls()}<strong>Lingua:</strong> Livello`;
+    ul.appendChild(li);
+    li.focus();
+    showToast('✓ Lingua aggiunta');
+}
+
+// ============================================================
+//  ACTIVE SECTION TRACKER
+// ============================================================
+let _lastSection = null;
+document.addEventListener('click', (e) => {
+    const s = e.target.closest('.section');
+    if (s) _lastSection = s;
+});
+
+function getActiveSectionOrLast() {
+    if (_lastSection && document.contains(_lastSection)) return _lastSection;
+    const sections = document.querySelectorAll('.section');
+    return sections[sections.length - 1] || null;
+}
+
+// ============================================================
+//  LINK MODAL
+// ============================================================
+function openLinkModal(el) {
+    currentLinkEl = el;
+    const modal = document.getElementById('link-modal');
+    document.getElementById('link-text-input').value = el ? el.textContent.trim() : '';
+    document.getElementById('link-href-input').value = el ? (el.href || '') : '';
+    modal.classList.add('open');
+    setTimeout(() => document.getElementById('link-text-input').focus(), 100);
+}
+
+function closeLinkModal() {
+    document.getElementById('link-modal').classList.remove('open');
+    currentLinkEl = null;
+}
+
+function confirmLink() {
+    const text = document.getElementById('link-text-input').value.trim();
+    const href = document.getElementById('link-href-input').value.trim();
+    if (currentLinkEl) {
+        currentLinkEl.textContent = text || currentLinkEl.textContent;
+        if (href) currentLinkEl.href = href;
+    } else {
+        // Insert new link
+        const active = getActiveSectionOrLast();
+        if (active) {
+            const a = document.createElement('a');
+            a.href = href;
+            a.textContent = text || href;
+            a.className = 'cv-link';
+            a.target = '_blank';
+            a.setAttribute('ondblclick', 'openLinkModal(this)');
+            a.setAttribute('contenteditable', 'false');
+            const addRow = active.querySelector('.add-row');
+            if (addRow) addRow.insertAdjacentElement('beforebegin', a);
+            else active.insertAdjacentElement('beforeend', a);
+        }
+    }
+    closeLinkModal();
+    showToast('✓ Link aggiornato');
+}
+
+// Close modal on ESC
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closeLinkModal();
+        closeExportModal();
+    }
+});
+
+// ============================================================
+//  EXPORT
+// ============================================================
+function exportHTML() {
+    const root = document.getElementById('cv-root');
+    const clone = root.cloneNode(true);
+
+    // Remove all editor-specific elements
+    clone.querySelectorAll('.eb-controls, .add-row, .editor-hint').forEach(el => el.remove());
+
+    // Remove contenteditable attributes
+    clone.querySelectorAll('[contenteditable]').forEach(el => {
+        el.removeAttribute('contenteditable');
+        el.removeAttribute('spellcheck');
+    });
+
+    // Remove eb class
+    clone.querySelectorAll('.eb').forEach(el => el.classList.remove('eb'));
+
+    // Remove data-block
+    clone.querySelectorAll('[data-block]').forEach(el => el.removeAttribute('data-block'));
+
+    // Fix inline styles on data-block paragraphs (they used display:inline-block from contenteditable)
+    clone.querySelectorAll('p,li,span').forEach(el => {
+        if (el.style.display === 'inline-block') el.style.removeProperty('display');
+    });
+
+    const cleanHTML = `<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - Davide Spatola</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary-color: #0066cc; --dark-color: #333333; --light-gray-color: #f4f4f4; --border-color: #e0e0e0; --text-color: #5c6f82; }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Titillium Web', sans-serif; background-color: var(--light-gray-color); color: var(--dark-color); line-height: 1.6; font-weight: 300; }
+        .container { display: flex; max-width: 900px; margin: 40px auto; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .sidebar { width: 35%; padding: 30px; background-color: #f9f9f9; border-right: 1px solid var(--border-color); }
+        .sidebar h2 { color: var(--primary-color); margin-bottom: 20px; font-size: 1.2em; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid var(--primary-color); padding-bottom: 5px; }
+        .contact-info ul { list-style: none; }
+        .contact-info li { margin-bottom: 15px; display: flex; align-items: center; }
+        .contact-info li svg { width: 18px; height: 18px; margin-right: 10px; fill: var(--primary-color); flex-shrink: 0; }
+        .contact-info a { text-decoration: none; color: var(--dark-color); transition: color 0.3s; word-break: break-all; }
+        .contact-info a:hover { color: var(--primary-color); }
+        .skills-list, .languages-list { list-style: none; }
+        .skills-list li, .languages-list li { margin-bottom: 10px; }
+        .qr-code { text-align: center; margin-top: 30px; }
+        .qr-code img { width: 120px; height: 120px; }
+        .qr-code p { font-size: 0.8em; color: var(--text-color); margin-top: 5px; }
+        .badge-container { margin-top: 30px; }
+        .badge-grid { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .badge { text-align: center; flex: 1 1 30%; max-width: 130px; display: flex; flex-direction: column; align-items: center; }
+        .badge img { width: 100px; height: 100px; margin-top: 5px; }
+        .badge p { font-size: 0.75em; line-height: 1.2; color: var(--text-color); margin-bottom: 5px; min-height: 35px; }
+        .badge a { font-size: 0.8em; color: var(--primary-color); text-decoration: none; font-weight: 600; margin-top: 5px; }
+        .main-content { width: 65%; padding: 40px; }
+        .header h1 { font-size: 2.5em; font-weight: 700; color: var(--dark-color); margin-bottom: 5px; }
+        .header h3 { font-size: 1.3em; font-weight: 400; color: var(--primary-color); margin-bottom: 25px; }
+        .main-content h2 { color: var(--primary-color); font-size: 1.4em; font-weight: 600; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 2px solid var(--border-color); }
+        .section { margin-bottom: 30px; }
+        .section p { color: var(--text-color); }
+        .job, .project, .education-item { margin-bottom: 25px; }
+        .job-title, .project-title, .degree { font-size: 1.1em; font-weight: 600; color: var(--dark-color); }
+        .company, .education-institution { font-weight: 400; color: var(--primary-color); }
+        .date { font-size: 0.9em; color: var(--text-color); font-style: italic; }
+        .job-description { margin-top: 10px; list-style-position: outside; padding-left: 20px; }
+        .job-description li { margin-bottom: 8px; color: var(--text-color); }
+        .tech-tags { margin-top: 10px; }
+        .tag { display: inline-block; background-color: var(--light-gray-color); color: var(--text-color); padding: 3px 10px; border-radius: 15px; font-size: 0.8em; margin-right: 5px; margin-bottom: 5px; }
+        .cv-link { color: var(--primary-color); font-weight: 600; text-decoration: none; }
+        .download-btn { position: fixed; bottom: 30px; right: 30px; background-color: var(--primary-color); color: white; padding: 15px 25px; border-radius: 50px; text-decoration: none; box-shadow: 0 4px 12px rgba(0,102,204,0.4); transition: all 0.3s ease; display: flex; align-items: center; gap: 10px; font-weight: 600; font-family: inherit; font-size: 1rem; border: none; cursor: pointer; z-index: 1000; }
+        .download-btn:hover { background-color: #0052a3; transform: translateY(-2px); }
+        .download-btn svg { width: 24px; height: 24px; fill: white; }
+        @media screen and (max-width: 768px) { .container { flex-direction: column; } .sidebar, .main-content { width: 100%; border-right: none; } .main-content { order: 1; } .sidebar { order: 2; } .download-btn { bottom: 20px; right: 20px; padding: 12px 20px; font-size: 0.9em; } }
+        @media print { @page { size: A4 portrait; margin: 10mm; } body { background-color: #fff !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; font-size: 0.93em; } .container { display: flex !important; flex-direction: row !important; align-items: flex-start !important; box-shadow: none !important; margin: 0 !important; max-width: 100% !important; width: 100% !important; } .sidebar { width: 35% !important; background-color: #f9f9f9 !important; border-right: 1px solid var(--border-color) !important; padding: 20px !important; } .main-content { width: 65% !important; padding: 20px 25px !important; } .section { margin-bottom: 20px !important; } a { text-decoration: none !important; color: var(--dark-color) !important; } .download-btn { display: none !important; } h2, h3 { page-break-after: avoid !important; } .education-item, .project, .badge-container, .contact-info, .skills, .languages, .qr-code { page-break-inside: avoid !important; break-inside: avoid !important; display: inline-block !important; width: 100% !important; } .job { display: block !important; page-break-inside: auto !important; } .job li { page-break-inside: avoid !important; } .tag { border: 1px solid #ccc !important; } }
+    </style>
+</head>
+<body>
+    <button onclick="window.print()" class="download-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8.5 7.5c0 .83-.67 1.5-1.5 1.5H9v2H7.5V7H10c.83 0 1.5.67 1.5 1.5v1zm5 2c0 .83-.67 1.5-1.5 1.5h-2.5V7H15c.83 0 1.5.67 1.5 1.5v3zm4-3H19v1h1.5V11H19v2h-1.5V7h3v1.5zM9 9.5h1v-1H9v1zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm10 5.5h1v-3h-1v3z"/></svg>
+        Scarica CV PDF
+    </button>
+    ${clone.outerHTML}
+</body>
+</html>`;
+
+    document.getElementById('export-textarea').value = cleanHTML;
+    document.getElementById('export-modal').classList.add('open');
+}
+
+function closeExportModal() {
+    document.getElementById('export-modal').classList.remove('open');
+}
+
+function copyExport() {
+    const ta = document.getElementById('export-textarea');
+    ta.select();
+    document.execCommand('copy');
+    showToast('📋 HTML copiato negli appunti!');
+}
+
+function downloadHTML() {
+    const html = document.getElementById('export-textarea').value;
+    const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'curriculum.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showToast('⬇ File scaricato!');
+}
+
+// ============================================================
+//  ENTER KEY BEHAVIOR IN LI
+// ============================================================
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && e.target.tagName === 'LI' && e.target.contentEditable === 'true') {
+        e.preventDefault();
+        const li = e.target;
+        const newLi = document.createElement('li');
+        newLi.className = 'eb';
+        newLi.setAttribute('contenteditable', 'true');
+        newLi.setAttribute('spellcheck', 'false');
+        const isJobDesc = li.closest('.job-description');
+        newLi.innerHTML = (isJobDesc ? liControlsSimple() : liControls()) + '\u200B';
+        li.insertAdjacentElement('afterend', newLi);
+        // Place cursor
+        const range = document.createRange();
+        const sel = window.getSelection();
+        const textNode = newLi.childNodes[newLi.childNodes.length - 1];
+        range.setStart(textNode, textNode.length);
+        range.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(range);
+    }
+});
+
+// ============================================================
+//  LINK MODAL — close on backdrop click
+// ============================================================
+document.getElementById('link-modal').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('link-modal')) closeLinkModal();
+});
+document.getElementById('export-modal').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('export-modal')) closeExportModal();
+});
+
+// Prevent link navigation when in editor
+document.getElementById('cv-root').addEventListener('click', (e) => {
+    if (e.target.tagName === 'A' && !e.target.closest('[contenteditable]')) {
+        // allow default
+    }
+});
+
+// Init greeting
+setTimeout(() => showToast('👋 Benvenuto nell\'editor! Clicca su un testo per modificarlo.'), 800);
+</script>
+</body>
+</html>
